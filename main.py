@@ -8,9 +8,12 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QLabel, QLineEdit, QSizePolicy, QPushButton
 from PyQt5 import QtGui
 
-from ImageUtils import cvImgToQtImg, draw_area, isSpotInRect
+import ImageDetector
+from ImageUtils import cvImgToQtImg, draw_area, isAnyObjectInRect
 from Camera import VideoThread, CameraSetup
 from SirenDetector import SirenDetector
+
+# ====================== [ GUI CONFIG ] =========================
 
 CAMERA_W = 400
 CAMERA_H = 300
@@ -25,6 +28,8 @@ Option_INC_TIME_SPECIAL_LABEL_TEXT = "사회적 약자에 대한 증가 시간 (
 Option_TIME_CROSSWALK_GREEN_LABEL_TEXT = "횡단보도 기본 시간 (자연수)(초) : "
 Option_TIME_CARLANE_GREEN_LABEL_TEXT = "차량이동 기본 시간 (자연수)(초) : "
 Option_TIME_CHAGNE_TERM_LABEL_TEXT = "신호 변경 시간 간격 (자연수)(초) : "
+
+# ===============================================================
 
 
 class Main(QWidget):
@@ -260,75 +265,81 @@ class Main(QWidget):
         # Set Up GUI
         self.show()
 
-    def closeEvent(self, a0: QtGui.QCloseEvent) -> None:
+    def closeEvent(self, a0: QtGui.QCloseEvent):
         self.stopCamera()
         self.stop_Timer()
         self.stopSirenDetector()
 
     # imgLeft & imgRight must be cvImage
-    def processing(self, imgLeft, imgRight, left_pos, right_pos,
-                   ambulance_pos_left, cane_pos_left, wheelchair_pos_left, baby_carriage_pos_left,
-                   ambulance_pos_right, cane_pos_right, wheelchair_pos_right, baby_carriage_pos_right):
+    def processing(self, imgLeft, imgRight, left_pos, right_pos, custom_left_pos, custom_right_pos):
 
         if self.isPreparingCamera is True:
             return
 
         isPersonExist = False
         isDisablePersonExist = False
-        isSiren = self.SirenDetector.isSiren()
         isAmbulanceExist = False
+        isSiren = self.SirenDetector.isSiren()
 
-        try:
-            if len(imgLeft) == 0:
-                imgLeft = self.CAMERA_NO_SIGNAL_IMG_L
-            else:
-                CrossArea = self.config.getConfig()['LEFT_CAMERA_CROSSWALK_POS']
-                CarLaneArea = self.config.getConfig()['LEFT_CAMERA_CARLANE_POS']
+        # Unpacking Positions of Objects Detected on Left Camera
+        wheelchair_pos_left = custom_left_pos[ImageDetector.WHEELCHAIR_CLASS]
+        baby_carriage_pos_left = custom_left_pos[ImageDetector.BABY_CARRIAGE_CLASS]
+        cane_pos_left = custom_left_pos[ImageDetector.CANE_CLASS]
+        ambulance_pos_left = custom_left_pos[ImageDetector.AMBULANCE_CLASS]
 
-                if isPersonExist is False and isSpotInRect(CrossArea, left_pos):
-                    isPersonExist = True
+        # Unpacking Positions of Objects Detected on Right Camera
+        wheelchair_pos_right = custom_right_pos[ImageDetector.WHEELCHAIR_CLASS]
+        baby_carriage_pos_right = custom_right_pos[ImageDetector.BABY_CARRIAGE_CLASS]
+        cane_pos_right = custom_right_pos[ImageDetector.CANE_CLASS]
+        ambulance_pos_right = custom_right_pos[ImageDetector.AMBULANCE_CLASS]
 
-                if isDisablePersonExist is False:
-                    if isSpotInRect(CrossArea, cane_pos_left) or isSpotInRect(CrossArea, wheelchair_pos_left) or \
-                            isSpotInRect(CrossArea, baby_carriage_pos_left):
-                        isDisablePersonExist = True
+        if len(imgLeft) == 0:
+            imgLeft = self.CAMERA_NO_SIGNAL_IMG_L
+        else:
+            CrossArea = self.config.getConfig()['LEFT_CAMERA_CROSSWALK_POS']
+            CarLaneArea = self.config.getConfig()['LEFT_CAMERA_CARLANE_POS']
 
-                if isAmbulanceExist is False:
-                    if isSpotInRect(CarLaneArea, ambulance_pos_left):
-                        isAmbulanceExist = True
+            if isPersonExist is False and isAnyObjectInRect(CrossArea, left_pos):
+                isPersonExist = True
 
-                imgLeft = draw_area(imgLeft, CrossArea)
-                imgLeft = draw_area(imgLeft, CarLaneArea, (255, 0, 0), (255, 0, 0))
-                imgLeft = cvImgToQtImg(imgLeft, CAMERA_W)
+            if isDisablePersonExist is False:
+                if isAnyObjectInRect(CrossArea, cane_pos_left) or isAnyObjectInRect(CrossArea, wheelchair_pos_left) or \
+                        isAnyObjectInRect(CrossArea, baby_carriage_pos_left):
+                    isDisablePersonExist = True
 
-            self.CameraLeft.setPixmap(imgLeft.pixmap())
+            if isAmbulanceExist is False:
+                if isAnyObjectInRect(CarLaneArea, ambulance_pos_left):
+                    isAmbulanceExist = True
 
-            if len(imgRight) == 0:
-                imgRight = self.CAMERA_NO_SIGNAL_IMG_R
-            else:
-                CrossArea = self.config.getConfig()['RIGHT_CAMERA_CROSSWALK_POS']
-                CarLaneArea = self.config.getConfig()['RIGHT_CAMERA_CARLANE_POS']
+            imgLeft = draw_area(imgLeft, CrossArea)
+            imgLeft = draw_area(imgLeft, CarLaneArea, (255, 0, 0), (255, 0, 0))
+            imgLeft = cvImgToQtImg(imgLeft, CAMERA_W)
 
-                if isPersonExist is False and isSpotInRect(CrossArea, right_pos):
-                    isPersonExist = True
+        self.CameraLeft.setPixmap(imgLeft.pixmap())
 
-                if isDisablePersonExist is False:
-                    if isSpotInRect(CrossArea, cane_pos_right) or isSpotInRect(CrossArea, wheelchair_pos_right) or \
-                            isSpotInRect(CrossArea, baby_carriage_pos_right):
-                        isDisablePersonExist = True
+        if len(imgRight) == 0:
+            imgRight = self.CAMERA_NO_SIGNAL_IMG_R
+        else:
+            CrossArea = self.config.getConfig()['RIGHT_CAMERA_CROSSWALK_POS']
+            CarLaneArea = self.config.getConfig()['RIGHT_CAMERA_CARLANE_POS']
 
-                if isAmbulanceExist is False:
-                    if isSpotInRect(CarLaneArea, ambulance_pos_right):
-                        isAmbulanceExist = True
+            if isPersonExist is False and isAnyObjectInRect(CrossArea, right_pos):
+                isPersonExist = True
 
-                imgRight = draw_area(imgRight, CrossArea)
-                imgRight = draw_area(imgRight, CarLaneArea, (255, 0, 0), (255, 0, 0))
-                imgRight = cvImgToQtImg(imgRight, CAMERA_W)
+            if isDisablePersonExist is False:
+                if isAnyObjectInRect(CrossArea, cane_pos_right) or isAnyObjectInRect(CrossArea, wheelchair_pos_right) or \
+                        isAnyObjectInRect(CrossArea, baby_carriage_pos_right):
+                    isDisablePersonExist = True
 
-            self.CameraRight.setPixmap(imgRight.pixmap())
+            if isAmbulanceExist is False:
+                if isAnyObjectInRect(CarLaneArea, ambulance_pos_right):
+                    isAmbulanceExist = True
 
-        except Exception as e:
-            print(e)
+            imgRight = draw_area(imgRight, CrossArea)
+            imgRight = draw_area(imgRight, CarLaneArea, (255, 0, 0), (255, 0, 0))
+            imgRight = cvImgToQtImg(imgRight, CAMERA_W)
+
+        self.CameraRight.setPixmap(imgRight.pixmap())
 
         if self.timeStack <= self.changeTerm:
             if self.isCrosswalkTime is False and self.isCarlaneTime is True:
