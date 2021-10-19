@@ -1,23 +1,24 @@
 import numpy as np
 import cv2
-import ImageDetector
+import DetectorConnector
 
 from PyQt5.QtCore import QThread, pyqtSignal
 from ImageUtils import draw_area
 
 IMAGE_PATH = "Images\\"
+DETECTOR_SERVER_IP = 'localhost'
+DETECTOR_SERVER_PORT = 8080
 
 
 class VideoThread(QThread):
-    change_pixmap_signal = pyqtSignal(np.ndarray, np.ndarray, np.ndarray, np.ndarray,
-                                      np.ndarray, np.ndarray, np.ndarray, np.ndarray,
-                                      np.ndarray, np.ndarray, np.ndarray, np.ndarray)
+    change_pixmap_signal = pyqtSignal(np.ndarray, np.ndarray, list, list, list, list)
 
     def __init__(self, left_camera_num, right_camera_num):
         super().__init__()
         self._run_flag = True
         self.left_camera_num = left_camera_num
         self.right_camera_num = right_camera_num
+        self.conn = DetectorConnector.Connector(DETECTOR_SERVER_IP, DETECTOR_SERVER_PORT)
 
     def run(self):
         # capture from web cam
@@ -30,53 +31,28 @@ class VideoThread(QThread):
 
             pos_left = []
             pos_right = []
-
-            ambulance_pos_left = []
-            cane_pos_left = []
-            wheelchair_pos_left = []
-            baby_carriage_pos_left = []
-
-            ambulance_pos_right = []
-            cane_pos_right = []
-            wheelchair_pos_right = []
-            baby_carriage_pos_right = []
+            custom_pos_left = []
+            custom_pos_right = []
 
             if ret_left is False:
                 img_result_left = []
             else:
-                img_result_left, pos_left = ImageDetector.Detector(cv_img_left)
-                img_result_left, ambulance_pos_left, cane_pos_left, wheelchair_pos_left, baby_carriage_pos_left = \
-                    ImageDetector.CustomDetector(cv_img_left, drawOnImg=img_result_left)
+                result = self.conn.processing(cv_img_left)
+                img_result_left = result[0]
+                pos_left = result[1]
+                custom_pos_left = result[2]
 
             if ret_right is False:
                 img_result_right = []
             else:
-                img_result_right, pos_right = ImageDetector.Detector(cv_img_right)
-                img_result_right, ambulance_pos_right, cane_pos_right, wheelchair_pos_right, baby_carriage_pos_right = \
-                    ImageDetector.CustomDetector(cv_img_right, drawOnImg=img_result_right)
-
-            # Convert List => ND_ARRAY Form
-            img_result_left = np.array(img_result_left)
-            img_result_right = np.array(img_result_right)
-            pos_left = np.array(pos_left)
-            pos_right = np.array(pos_right)
-
-            ambulance_pos_left = np.array(ambulance_pos_left)
-            cane_pos_left = np.array(cane_pos_left)
-            wheelchair_pos_left = np.array(wheelchair_pos_left)
-            baby_carriage_pos_left = np.array(baby_carriage_pos_left)
-
-            ambulance_pos_right = np.array(ambulance_pos_right)
-            cane_pos_right = np.array(cane_pos_right)
-            wheelchair_pos_right = np.array(wheelchair_pos_right)
-            baby_carriage_pos_right = np.array(baby_carriage_pos_right)
+                result = self.conn.processing(cv_img_right)
+                img_result_right = result[0]
+                pos_right = result[1]
+                custom_pos_right = result[2]
 
             # Emit Lists To Main Processing Method
-            self.change_pixmap_signal.emit(img_result_left, img_result_right, pos_left, pos_right,
-                                           ambulance_pos_left, cane_pos_left, wheelchair_pos_left,
-                                           baby_carriage_pos_left,
-                                           ambulance_pos_right, cane_pos_right, wheelchair_pos_right,
-                                           baby_carriage_pos_right)
+            self.change_pixmap_signal.emit(img_result_left, img_result_right,
+                                           pos_left, pos_right, custom_pos_left, custom_pos_right)
 
         # shut down capture system
         cam_left.release()
@@ -111,7 +87,6 @@ class CameraSetup:
             self.addXY_inList(x, y)
 
     def runSetup(self):
-
         cv2.namedWindow(self.windowName)
         cv2.setMouseCallback(self.windowName, self.click_event)
 
