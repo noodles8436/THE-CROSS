@@ -36,6 +36,7 @@ def clearBuffer(sock):
 class Connector:
 
     def __init__(self, ip, port):
+        self.isRun = True
         self.notReceived_Before = False
         self.TCP_SERVER_IP = ip
         self.TCP_SERVER_PORT = port
@@ -90,10 +91,12 @@ class Connector:
             print(e)
             self.sock.close()
             time.sleep(1)
-            self.connectServer()
-            self.processing()
+            if self.isRun is True:
+                self.connectServer()
+                self.processing()
 
     def disconnect(self):
+        self.isRun = False
         self.sock.close()
 
 '''
