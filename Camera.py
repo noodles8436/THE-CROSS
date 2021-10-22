@@ -7,7 +7,7 @@ from ImageUtils import draw_area
 
 IMAGE_PATH = "Images\\"
 DETECTOR_SERVER_IP = 'localhost'
-DETECTOR_SERVER_PORT = 8080
+DETECTOR_SERVER_PORT = 7777
 
 
 class VideoThread(QThread):
@@ -31,24 +31,32 @@ class VideoThread(QThread):
 
             pos_left = []
             pos_right = []
-            custom_pos_left = []
-            custom_pos_right = []
+            custom_pos_left = [[], [], [], []]
+            custom_pos_right = [[], [], [], []]
 
             if ret_left is False:
-                img_result_left = []
+                img_result_left = np.array([])
             else:
                 result = self.conn.processing(cv_img_left)
-                img_result_left = result[0]
-                pos_left = result[1]
-                custom_pos_left = result[2]
+                if result is None:
+                    img_result_left = cv_img_left
+                else:
+                    img_result_left = np.array(result[0])
+                    pos_left = result[1]
+                    if len(custom_pos_left) != 0:
+                        custom_pos_left = result[2]
 
             if ret_right is False:
-                img_result_right = []
+                img_result_right = np.array([])
             else:
                 result = self.conn.processing(cv_img_right)
-                img_result_right = result[0]
-                pos_right = result[1]
-                custom_pos_right = result[2]
+                if result is None:
+                    img_result_right = cv_img_right
+                else:
+                    img_result_right = np.array(result[0])
+                    pos_right = result[1]
+                    if len(custom_pos_right) != 0:
+                        custom_pos_right = result[2]
 
             # Emit Lists To Main Processing Method
             self.change_pixmap_signal.emit(img_result_left, img_result_right,
@@ -61,6 +69,9 @@ class VideoThread(QThread):
     def stop(self):
         self._run_flag = False
         self.exit()
+
+    def disconnectConnector(self):
+        self.conn.disconnect()
 
 
 class CameraSetup:
