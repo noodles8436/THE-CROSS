@@ -44,12 +44,15 @@ class DetectorServer:
         try:
             while True:
                 length = receiveAll(self.conn, 64)
+
                 if length is None:
                     continue
-                length1 = length.decode('utf-8')
-                stringData = receiveAll(self.conn, int(length1))
+
+                length_decoded = length.decode('utf-8')
+                stringData = receiveAll(self.conn, int(length_decoded))
                 data = numpy.frombuffer(base64.b64decode(stringData), numpy.uint8)
                 img = cv2.imdecode(data, 1)
+
                 result = self.processing(img)
                 self.sendResult(result)
 
@@ -61,8 +64,8 @@ class DetectorServer:
 
     # data must be numpy array
     def processing(self, data):
-        _, pos_result = ImageDetector.Detector(data)
-        _, custom_result = ImageDetector.CustomDetector(data)
+        pos_result = ImageDetector.Detector(data)
+        custom_result = ImageDetector.CustomDetector(data)
         return [pos_result, custom_result]
 
     def sendResult(self, result):
