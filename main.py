@@ -8,6 +8,7 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QLabel, QLineEdit, QSizePolicy, QPushButton
 from PyQt5 import QtGui
 
+import ImageUtils
 from ImageUtils import cvImgToQtImg, draw_area, isAnyObjectInRect
 from Camera import VideoThread, CameraSetup
 from SirenDetector import SirenDetector
@@ -32,6 +33,15 @@ WHEELCHAIR_CLASS = 0
 BABY_CARRIAGE_CLASS = 1
 CANE_CLASS = 2
 AMBULANCE_CLASS = 3
+
+WHEELCHAIR_LABEL = 'WHEELCHAIR'
+BABY_CARRIAGE_LABEL = 'BABY_CARRIAGE'
+CANE__LABEL = 'CANE'
+AMBULANCE_LABEL = 'AMBULANCE'
+
+ClassNum_List = [WHEELCHAIR_CLASS, BABY_CARRIAGE_CLASS, CANE_CLASS, AMBULANCE_CLASS]
+ClassLabel_List = [WHEELCHAIR_LABEL, BABY_CARRIAGE_LABEL, CANE__LABEL, AMBULANCE_LABEL]
+
 
 # ===============================================================
 
@@ -108,7 +118,6 @@ class Main(QWidget):
         self.CameraRight.setPixmap(self.CAMERA_NO_SIGNAL_IMG_R.pixmap())
         self.CameraLeft = QLabel()
         self.CameraLeft.setPixmap(self.CAMERA_NO_SIGNAL_IMG_L.pixmap())
-        self.thread = VideoThread(-1, -1)
         self.initUI()
 
     def initUI(self):
@@ -258,7 +267,12 @@ class Main(QWidget):
         self.setFixedSize(self.sizeHint())
 
         # Set Up Camera
-        self.refreshCamera()
+        self.preparingCamera()
+        self.thread = VideoThread(self.config.getConfig()['LEFT_CAMERA_NUMBER'],
+                                  self.config.getConfig()['RIGHT_CAMERA_NUMBER'])
+        self.thread.change_pixmap_signal.connect(self.processing)
+        self.thread.start()
+        self.isPreparingCamera = False
 
         # Set Up Timer
         self.start_Timer()
@@ -270,17 +284,17 @@ class Main(QWidget):
         self.show()
 
     def closeEvent(self, a0: QtGui.QCloseEvent):
-        self.stopCamera()
+        self.thread.close()
         self.stop_Timer()
         self.stopSirenDetector()
-        self.thread.disconnectConnector()
+        self.close()
 
     # imgLeft & imgRight must be cvImage
     def processing(self, imgLeft, imgRight, left_pos, right_pos, custom_left_pos, custom_right_pos):
-
         if self.isPreparingCamera is True:
             return
 
+        # Flags
         isPersonExist = False
         isDisablePersonExist = False
         isAmbulanceExist = False
@@ -298,6 +312,27 @@ class Main(QWidget):
         cane_pos_right = custom_right_pos[CANE_CLASS]
         ambulance_pos_right = custom_right_pos[AMBULANCE_CLASS]
 
+        # Draw Person Detection Box on Left-Camera image
+        if len(left_pos) != 0:
+            imgLeft = ImageUtils.draw_detection_boxes(imgLeft, left_pos, 'PERSON')
+
+        if len(right_pos) != 0:
+            imgRight = ImageUtils.draw_detection_boxes(imgRight, right_pos, 'PERSON')
+
+        # Draw Custom Detection Box on Left-Camera image
+        for classNum in ClassNum_List:
+            if len(custom_left_pos[classNum]) == 0:
+                continue
+            imgLeft = ImageUtils.draw_detection_boxes(
+                imgLeft, custom_left_pos[classNum], ClassLabel_List[classNum])
+
+        # Draw Custom Detection Box on Right-Camera image
+        for classNum in ClassNum_List:
+            if len(custom_right_pos[classNum]) == 0:
+                continue
+            imgRight = ImageUtils.draw_detection_boxes(
+                imgRight, custom_right_pos[classNum], ClassLabel_List[classNum])
+
         if len(imgLeft) == 0:
             imgLeft = self.CAMERA_NO_SIGNAL_IMG_L
         else:
@@ -308,7 +343,8 @@ class Main(QWidget):
                 isPersonExist = True
 
             if isDisablePersonExist is False:
-                if isAnyObjectInRect(CrossArea, cane_pos_left) or isAnyObjectInRect(CrossArea, wheelchair_pos_left) or \
+                if isAnyObjectInRect(CrossArea, cane_pos_left) or isAnyObjectInRect(CrossArea,
+                                                                                    wheelchair_pos_left) or \
                         isAnyObjectInRect(CrossArea, baby_carriage_pos_left):
                     isDisablePersonExist = True
 
@@ -332,7 +368,8 @@ class Main(QWidget):
                 isPersonExist = True
 
             if isDisablePersonExist is False:
-                if isAnyObjectInRect(CrossArea, cane_pos_right) or isAnyObjectInRect(CrossArea, wheelchair_pos_right) or \
+                if isAnyObjectInRect(CrossArea, cane_pos_right) or isAnyObjectInRect(CrossArea,
+                                                                                     wheelchair_pos_right) or \
                         isAnyObjectInRect(CrossArea, baby_carriage_pos_right):
                     isDisablePersonExist = True
 
@@ -393,22 +430,21 @@ class Main(QWidget):
 
     # ================ CONTROL PANEL CAMERA Setting ==================
 
-    def printPreparingCamera(self):
+    def preparingCamera(self):
         self.isPreparingCamera = True
         self.CameraLeft.setPixmap(self.CAMERA_PREPARING_IMG_L.pixmap())
         self.CameraRight.setPixmap(self.CAMERA_PREPARING_IMG_R.pixmap())
 
     def stopCamera(self):
-        if self.thread.isRunning() is True:
+        if self.thread.isRun() is True:
             self.thread.stop()
-            self.printPreparingCamera()
+            self.preparingCamera()
 
     def refreshCamera(self):
         self.stopCamera()
-        self.printPreparingCamera()
-        self.thread = VideoThread(self.config.getConfig()['LEFT_CAMERA_NUMBER'],
+        self.preparingCamera()
+        self.thread.setCameraNumber(self.config.getConfig()['LEFT_CAMERA_NUMBER'],
                                   self.config.getConfig()['RIGHT_CAMERA_NUMBER'])
-        self.thread.change_pixmap_signal.connect(self.processing)
         self.thread.start()
         self.isPreparingCamera = False
 
