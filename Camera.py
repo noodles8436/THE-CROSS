@@ -20,10 +20,19 @@ class VideoThread(QThread):
         self.right_camera_num = right_camera_num
         self.conn = DetectorConnector.Connector(DETECTOR_SERVER_IP, DETECTOR_SERVER_PORT)
 
+    def setCameraNumber(self, left_num, right_num):
+        self.left_camera_num = left_num
+        self.right_camera_num = right_num
+
+    def isRun(self):
+        return self._run_flag
+
     def run(self):
         # capture from web cam
         cam_left = cv2.VideoCapture(self.left_camera_num)
         cam_right = cv2.VideoCapture(self.right_camera_num)
+
+        self._run_flag = True
 
         while self._run_flag:
             ret_left, cv_img_left = cam_left.read()
@@ -37,26 +46,22 @@ class VideoThread(QThread):
             if ret_left is False:
                 img_result_left = np.array([])
             else:
+                img_result_left = cv_img_left
                 result = self.conn.processing(cv_img_left)
-                if result is None:
-                    img_result_left = cv_img_left
-                else:
-                    img_result_left = np.array(result[0])
-                    pos_left = result[1]
+                if result is not None:
+                    pos_left = result[0]
                     if len(custom_pos_left) != 0:
-                        custom_pos_left = result[2]
+                        custom_pos_left = result[1]
 
             if ret_right is False:
                 img_result_right = np.array([])
             else:
+                img_result_right = cv_img_right
                 result = self.conn.processing(cv_img_right)
-                if result is None:
-                    img_result_right = cv_img_right
-                else:
-                    img_result_right = np.array(result[0])
-                    pos_right = result[1]
+                if result is not None:
+                    pos_right = result[0]
                     if len(custom_pos_right) != 0:
-                        custom_pos_right = result[2]
+                        custom_pos_right = result[1]
 
             # Emit Lists To Main Processing Method
             self.change_pixmap_signal.emit(img_result_left, img_result_right,
@@ -68,10 +73,11 @@ class VideoThread(QThread):
 
     def stop(self):
         self._run_flag = False
-        self.exit()
 
-    def disconnectConnector(self):
+    def close(self):
+        self.stop()
         self.conn.disconnect()
+        self.exit()
 
 
 class CameraSetup:
