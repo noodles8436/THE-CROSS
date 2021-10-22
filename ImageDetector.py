@@ -51,6 +51,7 @@ def Detector(image):
     img_result = image
     pos_result = []
 
+    # TODO: Remove Feature that return Img and make that Static Function(img, pos, custom_pos)...
     # loop throughout the detections and place a box around it
     for score, (ymin, xmin, ymax, xmax), label in zip(pred_scores, pred_boxes, pred_labels):
         if score < DETECTION_PRECISION or label not in DETECTION_CLASS:
@@ -60,7 +61,7 @@ def Detector(image):
         cv2.putText(img_result, 'person', (xmin, ymax - 10), DETECTION_BOX_FONT, 0.5, (255, 0, 0), 1,
                     DETECTION_BOX_LINE)
 
-        pos_result.append([xmin, ymax, xmax, ymin])
+        pos_result.append([int(xmin), int(ymax), int(xmax), int(ymin)])
 
     return img_result, pos_result
 
@@ -94,6 +95,7 @@ def CustomDetector(image, drawOnImg=None):
         img_result = drawOnImg
 
     # loop throughout the detections and place a box around it
+    # TODO: Remove Feature that return Img and make that Static Function(img, pos, custom_pos)...
     for score, (ymin, xmin, ymax, xmax), label in zip(pred_scores, pred_boxes, pred_labels):
         if score < CUSTOM_DETECTOR_PRECISION:
             continue
@@ -105,7 +107,7 @@ def CustomDetector(image, drawOnImg=None):
 
         label_txt = LabelMap[label - 1][0]
         img_result = cv2.rectangle(img_result, (x_min, y_max), (x_max, y_min), LabelMap[label - 1][1], 3)
-        pos_result[label - 1].append([x_min, y_max, x_max, y_min])
+        pos_result[label - 1].append([int(x_min), int(y_max), int(x_max), int(y_min)])
         cv2.putText(img_result, label_txt, (x_min, y_max - 10),
                     DETECTION_BOX_FONT, 0.5, (255, 0, 0), 3, DETECTION_BOX_LINE)
 
