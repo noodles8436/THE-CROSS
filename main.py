@@ -8,7 +8,6 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QLabel, QLineEdit, QSizePolicy, QPushButton
 from PyQt5 import QtGui
 
-import ImageDetector
 from ImageUtils import cvImgToQtImg, draw_area, isAnyObjectInRect
 from Camera import VideoThread, CameraSetup
 from SirenDetector import SirenDetector
@@ -28,6 +27,11 @@ Option_INC_TIME_SPECIAL_LABEL_TEXT = "사회적 약자에 대한 증가 시간 (
 Option_TIME_CROSSWALK_GREEN_LABEL_TEXT = "횡단보도 기본 시간 (자연수)(초) : "
 Option_TIME_CARLANE_GREEN_LABEL_TEXT = "차량이동 기본 시간 (자연수)(초) : "
 Option_TIME_CHAGNE_TERM_LABEL_TEXT = "신호 변경 시간 간격 (자연수)(초) : "
+
+WHEELCHAIR_CLASS = 0
+BABY_CARRIAGE_CLASS = 1
+CANE_CLASS = 2
+AMBULANCE_CLASS = 3
 
 # ===============================================================
 
@@ -269,6 +273,7 @@ class Main(QWidget):
         self.stopCamera()
         self.stop_Timer()
         self.stopSirenDetector()
+        self.thread.disconnectConnector()
 
     # imgLeft & imgRight must be cvImage
     def processing(self, imgLeft, imgRight, left_pos, right_pos, custom_left_pos, custom_right_pos):
@@ -282,16 +287,16 @@ class Main(QWidget):
         isSiren = self.SirenDetector.isSiren()
 
         # Unpacking Positions of Objects Detected on Left Camera
-        wheelchair_pos_left = custom_left_pos[ImageDetector.WHEELCHAIR_CLASS]
-        baby_carriage_pos_left = custom_left_pos[ImageDetector.BABY_CARRIAGE_CLASS]
-        cane_pos_left = custom_left_pos[ImageDetector.CANE_CLASS]
-        ambulance_pos_left = custom_left_pos[ImageDetector.AMBULANCE_CLASS]
+        wheelchair_pos_left = custom_left_pos[WHEELCHAIR_CLASS]
+        baby_carriage_pos_left = custom_left_pos[BABY_CARRIAGE_CLASS]
+        cane_pos_left = custom_left_pos[CANE_CLASS]
+        ambulance_pos_left = custom_left_pos[AMBULANCE_CLASS]
 
         # Unpacking Positions of Objects Detected on Right Camera
-        wheelchair_pos_right = custom_right_pos[ImageDetector.WHEELCHAIR_CLASS]
-        baby_carriage_pos_right = custom_right_pos[ImageDetector.BABY_CARRIAGE_CLASS]
-        cane_pos_right = custom_right_pos[ImageDetector.CANE_CLASS]
-        ambulance_pos_right = custom_right_pos[ImageDetector.AMBULANCE_CLASS]
+        wheelchair_pos_right = custom_right_pos[WHEELCHAIR_CLASS]
+        baby_carriage_pos_right = custom_right_pos[BABY_CARRIAGE_CLASS]
+        cane_pos_right = custom_right_pos[CANE_CLASS]
+        ambulance_pos_right = custom_right_pos[AMBULANCE_CLASS]
 
         if len(imgLeft) == 0:
             imgLeft = self.CAMERA_NO_SIGNAL_IMG_L
@@ -603,6 +608,8 @@ class Main(QWidget):
 
 
 if __name__ == "__main__":
+    import os
+    os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
     app = QApplication(sys.argv)
     window = Main()
     app.exec_()
