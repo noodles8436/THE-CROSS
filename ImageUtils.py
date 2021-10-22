@@ -32,79 +32,44 @@ def cvImgToPixmap(cvImage):
     return pixmap
 
 
+def draw_detection_boxes(img, pos_list, text,
+                         font=cv2.FONT_HERSHEY_SIMPLEX, lineType=cv2.LINE_AA):
+    img_result = img
+    
+    for pos in pos_list:
+        if len(pos) != 4:
+            continue
+        img_result = cv2.rectangle(img, (pos[0], pos[1]), (pos[2], pos[3]), (0, 255, 0), 1)
+        cv2.putText(img_result, text, (pos[0], pos[1] - 10), font, 0.5, (255, 0, 0), 1,
+                    lineType)
+        
+    return img_result
+
+
 def draw_area(cvImg, pos_list, dotColor=(255, 0, 0), lineColor=(0, 255, 0)):
-    copyList = []
     for i in range(len(pos_list)):
         x = pos_list[i][0]
         y = pos_list[i][1]
         cv2.circle(cvImg, (x, y), 5, dotColor, -1)
-        copyList.append([x, y])
 
     if len(pos_list) == 4:
-        x_arg_sort = []
+
+        x_arg_sort = sort_rectPos(pos_list)
+
+        # High-Low-Low-High
         for i in range(4):
-            arg = np.argmax(copyList, axis=0)[0]
-            x_arg_sort.append(arg)
-            copyList[arg] = [-1, -1]
-        x_arg_sort.reverse()
-
-        if pos_list[x_arg_sort[0]][1] > pos_list[x_arg_sort[1]][1]:
-            dump = x_arg_sort[0]
-            x_arg_sort[0] = x_arg_sort[1]
-            x_arg_sort[1] = dump
-
-        try:
-            a = (pos_list[x_arg_sort[3]][1] - pos_list[x_arg_sort[0]][1]) / (
-                    pos_list[x_arg_sort[3]][0] - pos_list[x_arg_sort[0]][0])
-            result = a * (pos_list[x_arg_sort[2]][0] - pos_list[x_arg_sort[3]][0]) + pos_list[x_arg_sort[3]][1] - \
-                     pos_list[x_arg_sort[2]][1]
-        except ZeroDivisionError:
-            result = -1
-
-        if result > 0:
-            dump = x_arg_sort[2]
-            x_arg_sort[2] = x_arg_sort[3]
-            x_arg_sort[3] = dump
-
-        # High-Low_Low_High
-        for i in range(4):
-            arg = x_arg_sort[i]
-            start = pos_list[arg]
+            start = pos_list[x_arg_sort[i]]
             end = pos_list[x_arg_sort[(i + 1) % 4]]
             cv2.line(cvImg, (start[0], start[1]), (end[0], end[1]), lineColor, 2)
 
     return cvImg
 
 
-def isSpotInRect(rectPos, spot):
+def isAnyObjectInRect(rectPos, spot, boxSpot=True):
     if len(spot) == 0:
         return False
 
-    copyList = list(rectPos)
-    x_arg_sort = []
-    for i in range(4):
-        arg = np.argmax(copyList, axis=0)[0]
-        x_arg_sort.append(arg)
-        copyList[arg] = [-1, -1]
-    x_arg_sort.reverse()
-
-    if rectPos[x_arg_sort[0]][1] > rectPos[x_arg_sort[1]][1]:
-        dump = x_arg_sort[0]
-        x_arg_sort[0] = x_arg_sort[1]
-        x_arg_sort[1] = dump
-
-    try:
-        a = (rectPos[x_arg_sort[3]][1] - rectPos[x_arg_sort[0]][1]) / (
-                rectPos[x_arg_sort[3]][0] - rectPos[x_arg_sort[0]][0])
-        result = a * (rectPos[x_arg_sort[2]][0] - rectPos[x_arg_sort[3]][0]) + rectPos[x_arg_sort[3]][1] - \
-                 rectPos[x_arg_sort[2]][1]
-    except ZeroDivisionError:
-        result = -1
-
-    if result > 0:
-        dump = x_arg_sort[2]
-        x_arg_sort[2] = x_arg_sort[3]
-        x_arg_sort[3] = dump
+    x_arg_sort = sort_rectPos(rectPos)
 
     p1 = rectPos[x_arg_sort[0]]
     p2 = rectPos[x_arg_sort[1]]
@@ -116,8 +81,12 @@ def isSpotInRect(rectPos, spot):
     for i in range(0, len(spot)):
 
         try:
-            # [xmin, ymax, xmax, ymin]
-            target = [(spot[i][0] + spot[i][2]) / 2, spot[i][1]]
+
+            # Convert From [xmin, ymax, xmax, ymin] To [x,y]
+            if boxSpot is True:
+                target = [(spot[i][0] + spot[i][2]) / 2, spot[i][1]]
+            else:
+                target = spot[i]
 
             if p1[0] == p2[0]:
                 if not p1[0] < target[0]:
@@ -157,3 +126,27 @@ def isSpotInRect(rectPos, spot):
         return True
 
     return False
+
+
+def sort_rectPos(rectPos):
+    x_arg_sort = np.argsort(rectPos, 0)[:, 0]
+
+    if rectPos[x_arg_sort[0]][1] > rectPos[x_arg_sort[1]][1]:
+        temp = x_arg_sort[0]
+        x_arg_sort[0] = x_arg_sort[1]
+        x_arg_sort[1] = temp
+
+    try:
+        a = (rectPos[x_arg_sort[3]][1] - rectPos[x_arg_sort[0]][1]) / (
+                rectPos[x_arg_sort[3]][0] - rectPos[x_arg_sort[0]][0])
+        result = a * (rectPos[x_arg_sort[2]][0] - rectPos[x_arg_sort[3]][0]) + rectPos[x_arg_sort[3]][1] - \
+                 rectPos[x_arg_sort[2]][1]
+    except ZeroDivisionError:
+        result = -1
+
+    if result > 0:
+        temp = x_arg_sort[2]
+        x_arg_sort[2] = x_arg_sort[3]
+        x_arg_sort[3] = temp
+
+    return list(x_arg_sort)

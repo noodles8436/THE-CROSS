@@ -8,9 +8,6 @@ customDetector = tf.saved_model.load('customDetector/saved_model')
 
 # ================== [ CONFIG ] ================
 
-DETECTION_BOX_FONT = cv2.FONT_HERSHEY_SIMPLEX
-DETECTION_BOX_LINE = cv2.LINE_AA
-
 DETECTION_PRECISION = 0.5
 DETECTION_CLASS = [1]
 CUSTOM_DETECTOR_PRECISION = 0.3
@@ -48,26 +45,21 @@ def Detector(image):
     pred_boxes = boxes.numpy()[0].astype('int')
     pred_scores = scores.numpy()[0]
 
-    img_result = image
     pos_result = []
 
+    # TODO: Remove Feature that return Img and make that Static Function(img, pos, custom_pos)...
     # loop throughout the detections and place a box around it
     for score, (ymin, xmin, ymax, xmax), label in zip(pred_scores, pred_boxes, pred_labels):
         if score < DETECTION_PRECISION or label not in DETECTION_CLASS:
             continue
 
-        img_result = cv2.rectangle(img_result, (xmin, ymax), (xmax, ymin), (0, 255, 0), 1)
-        cv2.putText(img_result, 'person', (xmin, ymax - 10), DETECTION_BOX_FONT, 0.5, (255, 0, 0), 1,
-                    DETECTION_BOX_LINE)
+        pos_result.append([int(xmin), int(ymax), int(xmax), int(ymin)])
 
-        pos_result.append([xmin, ymax, xmax, ymin])
-
-    return img_result, pos_result
+    return pos_result
 
 
 # image = Pure Image that not drew anything
-# drawOnImg = image that you gonna draw something on
-def CustomDetector(image, drawOnImg=None):
+def CustomDetector(image):
     rgb_tensor = cvImgToRGBTensor(image)
     output_dict = customDetector(rgb_tensor)
 
@@ -84,16 +76,13 @@ def CustomDetector(image, drawOnImg=None):
     pred_scores = output_dict['detection_scores']
 
     h, w, c = image.shape
-    img_result = image
 
     pos_result = []
     for i in range(0, len(LabelMap)):
         pos_result.append([])
 
-    if drawOnImg is not None:
-        img_result = drawOnImg
-
     # loop throughout the detections and place a box around it
+    # TODO: Remove Feature that return Img and make that Static Function(img, pos, custom_pos)...
     for score, (ymin, xmin, ymax, xmax), label in zip(pred_scores, pred_boxes, pred_labels):
         if score < CUSTOM_DETECTOR_PRECISION:
             continue
@@ -103,13 +92,9 @@ def CustomDetector(image, drawOnImg=None):
         y_max = int(ymax * h)
         x_max = int(xmax * w)
 
-        label_txt = LabelMap[label - 1][0]
-        img_result = cv2.rectangle(img_result, (x_min, y_max), (x_max, y_min), LabelMap[label - 1][1], 3)
-        pos_result[label - 1].append([x_min, y_max, x_max, y_min])
-        cv2.putText(img_result, label_txt, (x_min, y_max - 10),
-                    DETECTION_BOX_FONT, 0.5, (255, 0, 0), 3, DETECTION_BOX_LINE)
+        pos_result[label - 1].append([int(x_min), int(y_max), int(x_max), int(y_min)])
 
-    return img_result, pos_result
+    return pos_result
 
 
 def cvImgToRGBTensor(image):
