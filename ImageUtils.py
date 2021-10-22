@@ -32,6 +32,20 @@ def cvImgToPixmap(cvImage):
     return pixmap
 
 
+def draw_detection_boxes(img, pos_list, text,
+                         font=cv2.FONT_HERSHEY_SIMPLEX, lineType=cv2.LINE_AA):
+    img_result = img
+    
+    for pos in pos_list:
+        if len(pos) != 4:
+            continue
+        img_result = cv2.rectangle(img, (pos[0], pos[1]), (pos[2], pos[3]), (0, 255, 0), 1)
+        cv2.putText(img_result, text, (pos[0], pos[1] - 10), font, 0.5, (255, 0, 0), 1,
+                    lineType)
+        
+    return img_result
+
+
 def draw_area(cvImg, pos_list, dotColor=(255, 0, 0), lineColor=(0, 255, 0)):
     for i in range(len(pos_list)):
         x = pos_list[i][0]
