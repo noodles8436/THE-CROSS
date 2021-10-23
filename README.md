@@ -20,8 +20,15 @@ Then, Download Project, Open Conda prompt in Project Folder and Follow commands 
 python setup.py
 ```
 
-How To Start Program
------------------------
+Next, Open Image Detection Server & **wait "Socket Opened" Message**
+```
+python DetectorServer.py
+```
+
+Finally, Open Program **in new Conda Prompt**
+```
+python main.py
+```
 
 Usage
 -----------------------
