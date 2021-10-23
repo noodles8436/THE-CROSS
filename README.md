@@ -2,18 +2,20 @@
 
 - 본 프로젝트는 OSS 개발자 대회 제출용 프로젝트 입니다.
 
-THE-CROSS - 참가자
+Installation
 -----------------------
-- 프로젝트 참가자
-    - 김태욱 (noodles8436) (소프트웨어학부 1학년) : 모델 학습 및 GUI 구현 담당 & 프로그램 중심 기능 구현 담당
-    - 신희승 (huiseung5571) (컴퓨터정보통신공학부 2학년) : 논문 및 기술 동향 파악 & 이론적 기술 확보 & 사이렌 감지 담당 <br/> ( github history 'username' 계정 참고 )
-- 도움을 주신 분들
-    - 휠체어 대여 : 연세대학교 미래캠퍼스 SW중심대학사업단
-    - 평가 및 조언 : 연세대학교 미래캠퍼스 손정우 교수님
-    - 촬영 도움 : 이승우, 이재규, 신동휘
-    - 조언 : 송영우
 
-THE-CROSS - 사용법 안내
+Before installing, **Install Anaconda on the device you want to run the program on.**
+
+```
+conda create -n <env-name> python=3.8
+conda activate <env-name>
+```
+```
+pip requirements List
+```
+
+Usage
 -----------------------
 1. Custom Model 설치
    - 해당 Github의 customDetector 폴더를 참조하세요.
@@ -28,7 +30,7 @@ THE-CROSS - 사용법 안내
    1. 좌측 하단에 존재하는 여러개의 값들을 원하시는 값으로 변경합니다. 
    2. "설정 변경" 버튼을 누릅니다.
 
-THE-CROSS - 내부 구조
+THE-CROSS
 --------------------------------------
 1. `Images` (Folder)
     - GUI에 사용되는 이미지가 저장되어 있음
