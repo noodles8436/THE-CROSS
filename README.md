@@ -17,18 +17,16 @@ pip requirements List
 
 Usage
 -----------------------
-1. Custom Model 설치
-   - 해당 Github의 customDetector 폴더를 참조하세요.
-2. 카메라 설정법
-   1. 프로그램 화면 우측하단에서, 원하시는 영역을 찾아 영역설정 버튼을 클릭합니다.
-   2. 버튼 클릭 시, 팝업되는 Window 창에 실시간 카메라 영상이 출력될 때까지 기다립니다.
-   3. 팝업된 Window 창에 실시칸 카메라 영상이 출력되면, 화면에 4개의 꼭짓점을 클릭하여 사각형 형태의 영역을 설정합니다.
-   4. 꼭짓점을 4개 초과 클릭 시, 이전에 클릭한 4개의 꼭짓점은 초기화 되며, 다시 꼭짓점들을 클릭하여 사각형 형태의 영역을 재설정하면 됩니다.
-   5. 저장하려면 키보드 "Q" Key를 눌러 저장하면 됩니다.
+1. Crosswalk & Car Lane Area Setting
+   1. At the bottom right of the program screen, find the area you want and click the area setting button.
+   2. When clicking the button, wait for the real-time camera image to be displayed in the window window that pops up.
+   3. When the real-time camerua image is displayed in the pop-up window window, click four spots on the screen to set a square-shaped area.
+   4. If you click more than four spots, the four spots you clicked before will be removed, and you can reset the square-shaped area by clicking the spots again.
+   5. To save, press the keyboard "Q" key to save it.
 
-3. 시간 증감값 설정법
-   1. 좌측 하단에 존재하는 여러개의 값들을 원하시는 값으로 변경합니다. 
-   2. "설정 변경" 버튼을 누릅니다.
+2. How to set the value of time increase or decrease.
+   1. Change the several values that exist in the lower left to the desired values. 
+   2. Press the "Change Settings" button.
 
 THE-CROSS
 --------------------------------------
