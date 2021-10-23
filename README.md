@@ -14,6 +14,9 @@ conda activate <env-name>
 ```
 pip requirements List
 ```
+```
+python setup.py
+```
 
 Usage
 -----------------------
