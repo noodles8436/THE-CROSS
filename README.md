@@ -11,12 +11,10 @@ Before installing, **Install Anaconda on the device you want to run the program 
 conda create -n <env-name> python=3.8
 conda activate <env-name>
 ```
-```
-pip requirements List
-```
 
 Then, Download Project, Open Conda prompt in Project Folder and Follow commands below
 ```
+pip install -r requirements.txt
 python setup.py
 ```
 
