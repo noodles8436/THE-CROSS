@@ -21,18 +21,6 @@ def receiveAll(sock, count):
     return buf
 
 
-'''
-def clearBuffer(sock):
-    sock.settimeout(0.1)
-    while True:
-        try:
-            sock.recv(1000)
-        except socket.timeout:
-            break
-    sock.settimeout(0.5)
-'''
-
-
 class Connector:
 
     def __init__(self, ip, port):
@@ -89,20 +77,12 @@ class Connector:
 
         except Exception as e:
             print(e)
-            self.sock.close()
-            time.sleep(1)
             if self.isRun is True:
+                self.sock.close()
+                time.sleep(1)
                 self.connectServer()
                 self.processing()
 
     def disconnect(self):
         self.isRun = False
         self.sock.close()
-
-'''
-if __name__ == "__main__":
-    c = Connector('localhost', 7777)
-    img = cv2.imread('./Images/Test/test_custom_detector.jpg')
-    result = c.processing(img)
-    print('result-->', result)
-'''
