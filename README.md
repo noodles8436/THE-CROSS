@@ -18,12 +18,13 @@ pip install -r requirements.txt
 python setup.py
 ```
 
-Next, Open Image Detection Server & **wait "Socket Opened" Message**
+Next, Follow command below to open Image Detection Server   
+:: CAUTION :: **wait "Socket Opened" Message**
 ```
 python DetectorServer.py
 ```
 
-Finally, Open Program **in new Conda Prompt**
+Finally, Open **new Conda Prompt in Project Folder ( activated `<env-name>` )** and follow below command
 ```
 python main.py
 ```
