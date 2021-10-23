@@ -20,6 +20,9 @@ Then, Download Project, Open Conda prompt in Project Folder and Follow commands 
 python setup.py
 ```
 
+How To Start Program
+-----------------------
+
 Usage
 -----------------------
 1. Crosswalk & Car Lane Area Setting
