@@ -52,5 +52,8 @@ FAQ
 License
 ----------------------
 
-Contribution
+How to Conribute
+----------------------
+
+Contributors
 ----------------------
