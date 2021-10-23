@@ -14,6 +14,8 @@ conda activate <env-name>
 ```
 pip requirements List
 ```
+
+Then, Download Project, Open Conda prompt in Project Folder and Follow commands below
 ```
 python setup.py
 ```
