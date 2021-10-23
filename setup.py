@@ -20,3 +20,5 @@ print('Successfully Extracted!\n')
 print('Remove customDetector.zip...')
 os.remove('./customDetector/customDetector.zip')
 print('Successfully Removed!')
+
+print('Installation succeeded.')
