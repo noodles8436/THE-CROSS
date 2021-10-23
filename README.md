@@ -5,26 +5,30 @@
 Installation
 -----------------------
 
-Before installing, **Install Anaconda on the device you want to run the program on.**
+Before installing, Please check the two points below.   
+- 1.**Install Anaconda on the device you want to run the program on.**   
+- 2.**Make sure at least one camera is connected on the device**
 
+   
+Open command prompt and create conda environment
 ```
 conda create -n <env-name> python=3.8
 conda activate <env-name>
 ```
 
-Then, Download Project, Open Conda prompt in Project Folder and Follow commands below
+Then, Download Project from github, Open Conda prompt ***in Project Folder*** and Follow commands below
 ```
 pip install -r requirements.txt
 python setup.py
 ```
 
 Next, Follow command below to open Image Detection Server   
-:: CAUTION :: **wait "Socket Opened" Message**
+:: CAUTION :: ***wait "Socket Opened" Message***
 ```
 python DetectorServer.py
 ```
 
-Finally, Open **new Conda Prompt in Project Folder ( activated `<env-name>` )** and follow below command
+Finally, Open ***new Conda Prompt in Project Folder ( activated `<env-name>` )*** and follow below command
 ```
 python main.py
 ```
