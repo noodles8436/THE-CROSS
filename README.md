@@ -48,7 +48,7 @@ Usage
     conda activate <env-name>
     cd THE-CROSS
     
-    python main.py
+    python client.py
     ```
    
 3. ### Setting Crosswalk & Car Lane Area
