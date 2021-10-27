@@ -22,26 +22,28 @@ conda create -n cross python=3.8
 conda activate cross
 ```
 
-Then, Download Project from github, Open Conda prompt ***in Project Folder*** and Follow commands below
+Then, Download Project from github, Open Conda prompt ***in Project Folder*** and   
+Follow commands below **TO DOWNLOAD DETECITON MODEL**
 ```
 git clone https://github.com/noodles8436/THE-CROSS.git
 
 cd THE-CROSS
 
 pip install -r requirements.txt
-python setup.py
+python download_model.py
 ```
 
 Usage
 -----------------------
 
  1. ### Open Image Detection Server   
-    :: CAUTION :: ***wait "Socket Opened" Message***
+    Follow the below command to open Image Detection Server   
+    :: CAUTION :: ***wait until "Socket Opened" Message printed***
     ```
     python DetectorServer.py
     ```
  2. ### Open Client Program
-    Then, Open ***new Conda Prompt in Project Folder ( activated `<env-name>` )*** and Follow below command
+    Open ***new Conda Prompt in Project Folder ( activated `<env-name>` )*** and Follow below command **TO OPEN CLIENT PROGRAM**
     ```
     conda activate <env-name>
     cd THE-CROSS
