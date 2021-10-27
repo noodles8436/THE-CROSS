@@ -51,6 +51,13 @@ FAQ
 
 License
 ----------------------
+tensorflow = Apache 2.0
+tensorflow-hub = Apache 2.0
+OpenCV = Apache 2.0
+PyQT5 = GPL v3
+Numpy = BSD 3-Clause
+sounddevice = MIT
+gdown = MIT   
 
 How to Conribute
 ----------------------
