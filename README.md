@@ -23,16 +23,20 @@ conda activate cross
 ```
 
 Then, Download Project from github, Open Conda prompt ***in Project Folder*** and   
-Follow commands below **TO DOWNLOAD DETECITON MODEL**
+Follow commands below ***TO DOWNLOAD REQUIREMENTS***
 ```
 git clone https://github.com/noodles8436/THE-CROSS.git
-
 cd THE-CROSS
 
 pip install -r requirements.txt
-python download_model.py
 ```
 
+Finally, Follow commands below to Download Transfer trained Object Detection Model   
+( ***This model is a model obtained by transfer training the EfficientDet-D2 model.*** )
+
+```
+python download_model.py
+```
 Usage
 -----------------------
 
@@ -40,15 +44,24 @@ Usage
     Follow the below command to open Image Detection Server   
     :: CAUTION :: ***wait until "Socket Opened" Message printed***
     ```
-    python DetectorServer.py
+    python DetectorServer.py --ip=XXX.XXX.XXX.XXX --port=XXXX
+    
+    :: EXAMPLE ::
+    python DetectorServer.py --ip=127.0.0.1 --port=7777
     ```
  2. ### Open Client Program
-    Open ***new Conda Prompt in Project Folder ( activated `<env-name>` )*** and Follow below command **TO OPEN CLIENT PROGRAM**
+    Open ***new Conda Prompt in Project Folder ( activated `<env-name>` )***
     ```
     conda activate <env-name>
     cd THE-CROSS
+    ```
+    Follow below command **TO OPEN CLIENT PROGRAM**   
+    :: CAUTION :: ***Client IP & PORT MUST BE THE SAME AS Server IP & PORT***
+    ```
+    python client.py --ip=XXX.XXX.XXX.XXX --port=XXXX
     
-    python client.py
+    :: EXAMPLE ::
+    python client.py --ip=127.0.0.1 --port=7777
     ```
    
 3. ### Setting Crosswalk & Car Lane Area
