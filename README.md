@@ -44,15 +44,24 @@ Usage
     Follow the below command to open Image Detection Server   
     :: CAUTION :: ***wait until "Socket Opened" Message printed***
     ```
-    python DetectorServer.py
+    python DetectorServer.py --ip=XXX.XXX.XXX.XXX --port=XXXX
+    
+    :: EXAMPLE ::
+    python DetectorServer.py --ip=127.0.0.1 --port=7777
     ```
  2. ### Open Client Program
-    Open ***new Conda Prompt in Project Folder ( activated `<env-name>` )*** and Follow below command **TO OPEN CLIENT PROGRAM**
+    Open ***new Conda Prompt in Project Folder ( activated `<env-name>` )***
     ```
     conda activate <env-name>
     cd THE-CROSS
+    ```
+    Follow below command **TO OPEN CLIENT PROGRAM**   
+    :: CAUTION :: ***Client IP & PORT MUST BE THE SAME AS Server IP & PORT***
+    ```
+    python client.py --ip=XXX.XXX.XXX.XXX --port=XXXX
     
-    python client.py
+    :: EXAMPLE ::
+    python client.py --ip=127.0.0.1 --port=7777
     ```
    
 3. ### Setting Crosswalk & Car Lane Area
