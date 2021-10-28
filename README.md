@@ -102,6 +102,7 @@ How to Conribute
 
 Contributors
 ----------------------
+***Thank you to everyone who helped with this project.***
 - Wheelchair rental : Yonsei University Mirae Campus, SW-centered University Project Group.   
 - Evaluation and advice : Professor Son Jeongwoo of Yonsei University's Mirae Campus.   
 - Help to film videos for experiments. : Lee SeungWoo, Lee JaeGyu, Sin Donghwi   
