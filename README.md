@@ -8,7 +8,7 @@ Installation
 Before installing, Please check the two points below.   
 1. **Install Anaconda on the device you want to run the program on.**   
 2. **Make sure at least one camera is connected on the device**   
-( WebCam and USB CAM are both available, but I recommend using USB CAM. )   
+( WebCam and USB CAM are both available, but recommend using USB CAM. )   
 
    
 Open command prompt and create conda environment
