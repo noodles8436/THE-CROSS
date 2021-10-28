@@ -7,7 +7,7 @@ Installation
 
 Before installing, Please check the two points below.   
 1. **Install Anaconda on the device you want to run the program on.**   
-2. **Make sure at least one camera is connected on the device**   
+2. **Make sure that AT LEAST ONE camera and UP TO TWO CAMERAS are connected to the device.**   
 ( WebCam and USB CAM are both available, but recommend using USB CAM. )   
 
    
