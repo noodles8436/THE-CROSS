@@ -1,13 +1,14 @@
 # THE-CROSS - Smart Traffic Control Application
 
 - This project is for submitting the OSS Developer Competition.
+- [README 한국어 버전은 이 곳을 클릭하세요.](https://github.com/noodles8436/THE-CROSS/blob/development/README_KR.md)
 
 Installation
 -----------------------
 
 Before installing, Please check the two points below.   
-1. **Install Anaconda on the device you want to run the program on.**   
-2. **Make sure at least one camera is connected on the device**   
+1. Install ***Anaconda on the device you want to run*** the program on.
+2. Make sure that ***AT LEAST ONE camera and UP TO TWO CAMERAS are connected*** to the device.
 ( WebCam and USB CAM are both available, but recommend using USB CAM. )   
 
    
@@ -75,6 +76,13 @@ Usage
    1. Change the several values that exist in the lower left to the desired values. 
    2. Press the "Change Settings" button.
 
+Development & Test environment
+----------------------
+    OS  : Windows 10 Education 64 Bit (10.0, Build 19042)
+    CPU : Intel(R) Core(TM) i5-4570 CPU @ 3.20GHz (4 CPUs), ~3.2GHz
+    RAM : DDR3 16GB
+    GPU : NVIDIA GeForce GTX 1050 Ti 4GB
+
 FAQ
 ----------------------
 
@@ -95,3 +103,8 @@ How to Conribute
 
 Contributors
 ----------------------
+***Thank you to everyone who helped with this project.***
+- Wheelchair rental : Yonsei University Mirae Campus, SW-centered University Project Group.   
+- Evaluation and advice : Professor Son Jeongwoo of Yonsei University's Mirae Campus.   
+- Help to film videos for experiments. : Lee SeungWoo, Lee JaeGyu, Sin Donghwi   
+- Advice : Song Youngwoo   
