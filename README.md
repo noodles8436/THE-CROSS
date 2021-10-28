@@ -32,7 +32,7 @@ pip install -r requirements.txt
 ```
 
 Finally, Follow commands below to Download Transfer trained Object Detection Model   
-( ***This model is a model obtained by transfer training the EfficientDet-D2 model.***)
+( ***This model is a model obtained by transfer training the EfficientDet-D2 model.*** )
 
 ```
 python download_model.py
