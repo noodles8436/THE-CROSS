@@ -1,6 +1,7 @@
 # THE-CROSS - Smart Traffic Control Application
 
 - This project is for submitting the OSS Developer Competition.
+- [README 한국어 버전은 이 곳을 클릭하세요](ReadMe_KR.md)
 
 Installation
 -----------------------
