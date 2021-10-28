@@ -23,16 +23,20 @@ conda activate cross
 ```
 
 Then, Download Project from github, Open Conda prompt ***in Project Folder*** and   
-Follow commands below **TO DOWNLOAD DETECITON MODEL**
+Follow commands below ***TO DOWNLOAD REQUIREMENTS***
 ```
 git clone https://github.com/noodles8436/THE-CROSS.git
-
 cd THE-CROSS
 
 pip install -r requirements.txt
-python download_model.py
 ```
 
+Finally, Follow commands below to Download Transfer trained Object Detection Model   
+( ***This model is a model obtained by transfer training the EfficientDet-D2 model.***)
+
+```
+python download_model.py
+```
 Usage
 -----------------------
 
