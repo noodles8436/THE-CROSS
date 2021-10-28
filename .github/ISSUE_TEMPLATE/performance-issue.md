@@ -1,38 +1,25 @@
 ---
 name: Performance Issue
 about: Use this template for reporting a performance issue
-title: ''
-labels: bug
+title: "[BUG][PERFORMANCE]"
+labels: bug:performance
 assignees: huiseung5571, noodles8436
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+<em>Please make sure that this is an issue related to performance of THE-CROSS</em>
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+**System information**
+- OS Platform and Distribution (e.g., Linux Ubuntu 16.04):
+- Mobile device (e.g. iPhone 8, Pixel 2, Samsung Galaxy) if the issue happens on mobile device:
+- Python version:
+- CUDA/cuDNN version:
+- GPU model and memory:
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+**Describe the current behavior**
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+**Describe the expected behavior**
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
-
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
-
-**Additional context**
-Add any other context about the problem here.
+**Other info / logs** Include any logs or source code that would be helpful to
+diagnose the problem. If including tracebacks, please include the full
+traceback. Large logs and files should be attached.
