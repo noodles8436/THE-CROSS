@@ -75,6 +75,13 @@ Usage
    1. Change the several values that exist in the lower left to the desired values. 
    2. Press the "Change Settings" button.
 
+Development & Test environment.
+----------------------
+    OS  : Windows 10 Education 64 Bit (10.0, Build 19042)
+    CPU : Intel(R) Core(TM) i5-4570 CPU @ 3.20GHz (4 CPUs), ~3.2GHz
+    RAM : DDR3 16GB
+    GPU : NVIDIA GeForce GTX 1050 Ti 4GB
+
 FAQ
 ----------------------
 
