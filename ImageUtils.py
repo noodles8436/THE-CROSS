@@ -136,15 +136,28 @@ def sort_rectPos(rectPos):
         x_arg_sort[0] = x_arg_sort[1]
         x_arg_sort[1] = temp
 
+    if rectPos[x_arg_sort[2]][1] < rectPos[x_arg_sort[3]][1]:
+        temp = x_arg_sort[3]
+        x_arg_sort[3] = x_arg_sort[2]
+        x_arg_sort[2] = temp
+
     try:
         a = (rectPos[x_arg_sort[3]][1] - rectPos[x_arg_sort[0]][1]) / (
                 rectPos[x_arg_sort[3]][0] - rectPos[x_arg_sort[0]][0])
-        result = a * (rectPos[x_arg_sort[2]][0] - rectPos[x_arg_sort[3]][0]) + rectPos[x_arg_sort[3]][1] - \
+        result1 = a * (rectPos[x_arg_sort[2]][0] - rectPos[x_arg_sort[3]][0]) + rectPos[x_arg_sort[3]][1] - \
                  rectPos[x_arg_sort[2]][1]
     except ZeroDivisionError:
-        result = -1
+        result1 = -1
 
-    if result > 0:
+    try:
+        a = (rectPos[x_arg_sort[1]][1] - rectPos[x_arg_sort[2]][1]) / (
+                rectPos[x_arg_sort[1]][0] - rectPos[x_arg_sort[2]][0])
+        result2 = a * (rectPos[x_arg_sort[0]][0] - rectPos[x_arg_sort[1]][0]) + rectPos[x_arg_sort[1]][1] - \
+                  rectPos[x_arg_sort[0]][1]
+    except ZeroDivisionError:
+        result2 = -1
+
+    if result1*result2 > 0:
         temp = x_arg_sort[2]
         x_arg_sort[2] = x_arg_sort[3]
         x_arg_sort[3] = temp
