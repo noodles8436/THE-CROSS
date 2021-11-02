@@ -58,6 +58,8 @@ BUTTON_SETTING_RIGHT_CAM_CROSSWALK_TEXT = "RIGHT CAM CROSSWALK area setting"
 BUTTON_SETTING_LEFT_CAM_CARLINE_TEXT = "LEFT CAM CARLINE area setting"
 BUTTON_SETTING_RIGHT_CAM_CARLINE_TEXT = "RIGHT CAM CARLINE area setting"
 
+BUTTON_SETTING_SAVE = "SAVE"
+
 WHEELCHAIR_CLASS = 0
 BABY_CARRIAGE_CLASS = 1
 CANE_CLASS = 2
@@ -280,7 +282,7 @@ class Main(QWidget):
         # =======================================================
 
         self.ConfirmButton.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        self.ConfirmButton.setText("설정 저장")
+        self.ConfirmButton.setText(BUTTON_SETTING_SAVE)
         self.ConfirmButton.setFont(QFont(CONFIRM_BUTTON_FONT, 20))
         self.ConfirmButton.clicked.connect(self.confirmButtonClicked)
         OptionPanel.addWidget(self.ConfirmButton, 2)
