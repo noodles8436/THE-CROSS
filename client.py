@@ -1,4 +1,7 @@
 '''
+THE-CROSS : A Smart Traffic Control System for the protection of
+the socially disadvantaged and rapid transport of emergency vehicles.
+
 Copyright (C) 2021 THE-CROSS authors
  
 This program is free software: you can redistribute it and/or modify
