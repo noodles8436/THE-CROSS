@@ -58,10 +58,10 @@ Usage
     Follow the below command to open Image Detection Server   
     :: CAUTION :: ***wait until "Socket Opened" Message printed***
     ```
-    python DetectorServer.py --ip=XXX.XXX.XXX.XXX --port=XXXX
+    python Server.py --ip=XXX.XXX.XXX.XXX --port=XXXX
     
     :: EXAMPLE ::
-    python DetectorServer.py --ip=127.0.0.1 --port=7777
+    python Server.py --ip=127.0.0.1 --port=7777
     ```
     
     ![7](https://user-images.githubusercontent.com/88359959/139807476-faee940f-a7b5-4bf0-92a2-d05d4f5a300c.PNG)
@@ -75,10 +75,10 @@ Usage
     Follow below command **TO OPEN CLIENT PROGRAM**   
     :: CAUTION :: ***Client IP & PORT MUST BE THE SAME AS Server IP & PORT***
     ```
-    python client.py --ip=XXX.XXX.XXX.XXX --port=XXXX
+    python Client.py --ip=XXX.XXX.XXX.XXX --port=XXXX
     
     :: EXAMPLE ::
-    python client.py --ip=127.0.0.1 --port=7777
+    python Client.py --ip=127.0.0.1 --port=7777
     ```
     
     ![8](https://user-images.githubusercontent.com/88359959/139807508-0f23a618-15eb-442e-9c96-a7287a708e8d.PNG)
