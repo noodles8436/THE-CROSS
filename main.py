@@ -1,32 +1,29 @@
 '''
-MIT License
+THE-CROSS : A Smart Traffic Control System for the protection of
+the socially disadvantaged and rapid transport of emergency vehicles.
 
-Copyright (c) 2021 The THE-CROSS Authors
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Copyright (C) 2021 THE-CROSS authors
+ 
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+ 
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+ 
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>
 '''
-
-
+import argparse
 import sys
 import threading
 import time
 import cv2
+
+import Camera
 import FileManager
 
 from PyQt5.QtGui import QFont
@@ -43,16 +40,23 @@ from SirenDetector import SirenDetector
 CAMERA_W = 400
 CAMERA_H = 300
 
-IMAGE_PATH = "Images\\"
+IMAGE_PATH = "Images/"
 
 TIMER_FONT = 'Arial'
 CONFIRM_BUTTON_FONT = 'Arial'
 
-Option_INC_TIME_NORMAL_LABEL_TEXT = "일반 사람에 대한 증가 시간 (자연수)(초) : "
-Option_INC_TIME_SPECIAL_LABEL_TEXT = "사회적 약자에 대한 증가 시간 (자연수)(초) : "
-Option_TIME_CROSSWALK_GREEN_LABEL_TEXT = "횡단보도 기본 시간 (자연수)(초) : "
-Option_TIME_CARLANE_GREEN_LABEL_TEXT = "차량이동 기본 시간 (자연수)(초) : "
-Option_TIME_CHAGNE_TERM_LABEL_TEXT = "신호 변경 시간 간격 (자연수)(초) : "
+Option_INC_TIME_NORMAL_LABEL_TEXT = "Time to increase for ORDINARY PEOPLE (natural number)(seconds) : "
+Option_INC_TIME_SPECIAL_LABEL_TEXT = "Time to increase for THE SOCIALLY DISADVANTAGED (natural number)(seconds) : "
+Option_TIME_CROSSWALK_GREEN_LABEL_TEXT = "Basic pedestrian signal time (natural number)(seconds) : "
+Option_TIME_CARLANE_GREEN_LABEL_TEXT = "Basic vehicle signal time (natural number)(seconds) : "
+Option_TIME_CHAGNE_TERM_LABEL_TEXT = "Yellow traffic light time (natural number)(seconds) : "
+
+BUTTON_CHANGE_CROSSWALK_TIME_TEXT = "Change to pedestrian signal"
+BUTTON_CHANGE_CARLINE_TIME_TEXT = "Change to a vehicle signal"
+BUTTON_SETTING_LEFT_CAM_CROSSWALK_TEXT = "LEFT CAM CROSSWALK area setting"
+BUTTON_SETTING_RIGHT_CAM_CROSSWALK_TEXT = "RIGHT CAM CROSSWALK area setting"
+BUTTON_SETTING_LEFT_CAM_CARLINE_TEXT = "LEFT CAM CARLINE area setting"
+BUTTON_SETTING_RIGHT_CAM_CARLINE_TEXT = "RIGHT CAM CARLINE area setting"
 
 WHEELCHAIR_CLASS = 0
 BABY_CARRIAGE_CLASS = 1
@@ -237,20 +241,20 @@ class Main(QWidget):
         # ==================== CONTROL PANEL ====================
         # =======================================================
 
-        self.Change_CrosswalkTime_Button.setText("횡단보도 신호로 변경")
-        self.Change_CarTime_Button.setText("도로주행 신호로 변경")
+        self.Change_CrosswalkTime_Button.setText(BUTTON_CHANGE_CROSSWALK_TIME_TEXT)
+        self.Change_CarTime_Button.setText(BUTTON_CHANGE_CARLINE_TIME_TEXT)
 
         self.Change_CrosswalkTime_Button.clicked.connect(self.Change_CrosswalkTime_Button_Event)
         self.Change_CarTime_Button.clicked.connect(self.Change_CarTime_Button_Event)
 
-        self.Left_Camera_Crosswalk_Button.setText("좌측 카메라 횡단보도 영역설정")
-        self.Right_Camera_Crosswalk_Button.setText("우측 카메라 횡단보도 영역설정")
+        self.Left_Camera_Crosswalk_Button.setText(BUTTON_SETTING_LEFT_CAM_CROSSWALK_TEXT)
+        self.Right_Camera_Crosswalk_Button.setText(BUTTON_SETTING_RIGHT_CAM_CROSSWALK_TEXT)
 
         self.Left_Camera_Crosswalk_Button.clicked.connect(self.Left_Camera_Crosswalk_Button_Event)
         self.Right_Camera_Crosswalk_Button.clicked.connect(self.Right_Camera_Crosswalk_Button_Event)
 
-        self.Left_Camera_Carlane_Button.setText("좌측 카메라 차량도로 영역설정")
-        self.Right_Camera_Carlane_Button.setText("우측 카메라 차량도로 영역설정")
+        self.Left_Camera_Carlane_Button.setText(BUTTON_SETTING_LEFT_CAM_CARLINE_TEXT)
+        self.Right_Camera_Carlane_Button.setText(BUTTON_SETTING_RIGHT_CAM_CARLINE_TEXT)
 
         self.Left_Camera_Carlane_Button.clicked.connect(self.Left_Camera_Carlane_Button_Event)
         self.Right_Camera_Carlane_Button.clicked.connect(self.Right_Camera_Carlane_Button_Event)
@@ -469,7 +473,7 @@ class Main(QWidget):
         self.stopCamera()
         self.preparingCamera()
         self.thread.setCameraNumber(self.config.getConfig()['LEFT_CAMERA_NUMBER'],
-                                  self.config.getConfig()['RIGHT_CAMERA_NUMBER'])
+                                    self.config.getConfig()['RIGHT_CAMERA_NUMBER'])
         self.thread.start()
         self.isPreparingCamera = False
 
@@ -668,9 +672,13 @@ class Main(QWidget):
             self.SirenDetector.stop()
 
 
-if __name__ == "__main__":
+def start(IP, PORT):
+    Camera.DETECTOR_SERVER_IP = IP
+    Camera.DETECTOR_SERVER_PORT = PORT
+
     import os
     os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
     app = QApplication(sys.argv)
     window = Main()
     app.exec_()
