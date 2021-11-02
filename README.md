@@ -23,6 +23,11 @@ conda create -n cross python=3.8
 conda activate cross
 ```
 
+![1](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/1.png)
+![2](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/2.PNG)
+![3](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/3.PNG)
+
+
 Then, Download Project from github, Open Conda prompt ***in Project Folder*** and   
 Follow commands below ***TO DOWNLOAD REQUIREMENTS***
 ```
@@ -32,12 +37,20 @@ cd THE-CROSS
 pip install -r requirements.txt
 ```
 
+![4](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/4.PNG)
+![5](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/5.PNG)
+
+
 Finally, Follow commands below to Download Transfer trained Object Detection Model   
 ( ***This model is a model obtained by transfer training the EfficientDet-D2 model.*** )
 
 ```
 python download_model.py
 ```
+
+![6](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/6.PNG)
+
+
 Usage
 -----------------------
 
@@ -45,11 +58,14 @@ Usage
     Follow the below command to open Image Detection Server   
     :: CAUTION :: ***wait until "Socket Opened" Message printed***
     ```
-    python DetectorServer.py --ip=XXX.XXX.XXX.XXX --port=XXXX
+    python Server.py --ip=XXX.XXX.XXX.XXX --port=XXXX
     
     :: EXAMPLE ::
-    python DetectorServer.py --ip=127.0.0.1 --port=7777
+    python Server.py --ip=127.0.0.1 --port=7777
     ```
+    
+    ![7](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/7.PNG)
+    
  2. ### Open Client Program
     Open ***new Conda Prompt in Project Folder ( activated `<env-name>` )***
     ```
@@ -59,11 +75,15 @@ Usage
     Follow below command **TO OPEN CLIENT PROGRAM**   
     :: CAUTION :: ***Client IP & PORT MUST BE THE SAME AS Server IP & PORT***
     ```
-    python client.py --ip=XXX.XXX.XXX.XXX --port=XXXX
+    python Client.py --ip=XXX.XXX.XXX.XXX --port=XXXX
     
     :: EXAMPLE ::
-    python client.py --ip=127.0.0.1 --port=7777
+    python Client.py --ip=127.0.0.1 --port=7777
     ```
+    
+    ![8](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/8.PNG)
+    ![9](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/9.PNG)
+
    
 3. ### Setting Crosswalk & Car Lane Area
    1. At the bottom right of the program screen, find the area you want and click the area setting button.

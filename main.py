@@ -17,11 +17,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>
 '''
-
+import argparse
 import sys
 import threading
 import time
 import cv2
+
+import Camera
 import FileManager
 
 from PyQt5.QtGui import QFont
@@ -38,16 +40,25 @@ from SirenDetector import SirenDetector
 CAMERA_W = 400
 CAMERA_H = 300
 
-IMAGE_PATH = "Images\\"
+IMAGE_PATH = "Images/"
 
 TIMER_FONT = 'Arial'
 CONFIRM_BUTTON_FONT = 'Arial'
 
-Option_INC_TIME_NORMAL_LABEL_TEXT = "일반 사람에 대한 증가 시간 (자연수)(초) : "
-Option_INC_TIME_SPECIAL_LABEL_TEXT = "사회적 약자에 대한 증가 시간 (자연수)(초) : "
-Option_TIME_CROSSWALK_GREEN_LABEL_TEXT = "횡단보도 기본 시간 (자연수)(초) : "
-Option_TIME_CARLANE_GREEN_LABEL_TEXT = "차량이동 기본 시간 (자연수)(초) : "
-Option_TIME_CHAGNE_TERM_LABEL_TEXT = "신호 변경 시간 간격 (자연수)(초) : "
+Option_INC_TIME_NORMAL_LABEL_TEXT = "Time to increase for ORDINARY PEOPLE (natural number)(seconds) : "
+Option_INC_TIME_SPECIAL_LABEL_TEXT = "Time to increase for THE SOCIALLY DISADVANTAGED (natural number)(seconds) : "
+Option_TIME_CROSSWALK_GREEN_LABEL_TEXT = "Basic pedestrian signal time (natural number)(seconds) : "
+Option_TIME_CARLANE_GREEN_LABEL_TEXT = "Basic vehicle signal time (natural number)(seconds) : "
+Option_TIME_CHAGNE_TERM_LABEL_TEXT = "Yellow traffic light time (natural number)(seconds) : "
+
+BUTTON_CHANGE_CROSSWALK_TIME_TEXT = "Change to pedestrian signal"
+BUTTON_CHANGE_CARLINE_TIME_TEXT = "Change to a vehicle signal"
+BUTTON_SETTING_LEFT_CAM_CROSSWALK_TEXT = "LEFT CAM CROSSWALK area setting"
+BUTTON_SETTING_RIGHT_CAM_CROSSWALK_TEXT = "RIGHT CAM CROSSWALK area setting"
+BUTTON_SETTING_LEFT_CAM_CARLINE_TEXT = "LEFT CAM CARLINE area setting"
+BUTTON_SETTING_RIGHT_CAM_CARLINE_TEXT = "RIGHT CAM CARLINE area setting"
+
+BUTTON_SETTING_SAVE = "SAVE"
 
 WHEELCHAIR_CLASS = 0
 BABY_CARRIAGE_CLASS = 1
@@ -232,20 +243,20 @@ class Main(QWidget):
         # ==================== CONTROL PANEL ====================
         # =======================================================
 
-        self.Change_CrosswalkTime_Button.setText("횡단보도 신호로 변경")
-        self.Change_CarTime_Button.setText("도로주행 신호로 변경")
+        self.Change_CrosswalkTime_Button.setText(BUTTON_CHANGE_CROSSWALK_TIME_TEXT)
+        self.Change_CarTime_Button.setText(BUTTON_CHANGE_CARLINE_TIME_TEXT)
 
         self.Change_CrosswalkTime_Button.clicked.connect(self.Change_CrosswalkTime_Button_Event)
         self.Change_CarTime_Button.clicked.connect(self.Change_CarTime_Button_Event)
 
-        self.Left_Camera_Crosswalk_Button.setText("좌측 카메라 횡단보도 영역설정")
-        self.Right_Camera_Crosswalk_Button.setText("우측 카메라 횡단보도 영역설정")
+        self.Left_Camera_Crosswalk_Button.setText(BUTTON_SETTING_LEFT_CAM_CROSSWALK_TEXT)
+        self.Right_Camera_Crosswalk_Button.setText(BUTTON_SETTING_RIGHT_CAM_CROSSWALK_TEXT)
 
         self.Left_Camera_Crosswalk_Button.clicked.connect(self.Left_Camera_Crosswalk_Button_Event)
         self.Right_Camera_Crosswalk_Button.clicked.connect(self.Right_Camera_Crosswalk_Button_Event)
 
-        self.Left_Camera_Carlane_Button.setText("좌측 카메라 차량도로 영역설정")
-        self.Right_Camera_Carlane_Button.setText("우측 카메라 차량도로 영역설정")
+        self.Left_Camera_Carlane_Button.setText(BUTTON_SETTING_LEFT_CAM_CARLINE_TEXT)
+        self.Right_Camera_Carlane_Button.setText(BUTTON_SETTING_RIGHT_CAM_CARLINE_TEXT)
 
         self.Left_Camera_Carlane_Button.clicked.connect(self.Left_Camera_Carlane_Button_Event)
         self.Right_Camera_Carlane_Button.clicked.connect(self.Right_Camera_Carlane_Button_Event)
@@ -271,7 +282,7 @@ class Main(QWidget):
         # =======================================================
 
         self.ConfirmButton.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        self.ConfirmButton.setText("설정 저장")
+        self.ConfirmButton.setText(BUTTON_SETTING_SAVE)
         self.ConfirmButton.setFont(QFont(CONFIRM_BUTTON_FONT, 20))
         self.ConfirmButton.clicked.connect(self.confirmButtonClicked)
         OptionPanel.addWidget(self.ConfirmButton, 2)
@@ -464,7 +475,7 @@ class Main(QWidget):
         self.stopCamera()
         self.preparingCamera()
         self.thread.setCameraNumber(self.config.getConfig()['LEFT_CAMERA_NUMBER'],
-                                  self.config.getConfig()['RIGHT_CAMERA_NUMBER'])
+                                    self.config.getConfig()['RIGHT_CAMERA_NUMBER'])
         self.thread.start()
         self.isPreparingCamera = False
 
@@ -663,9 +674,13 @@ class Main(QWidget):
             self.SirenDetector.stop()
 
 
-if __name__ == "__main__":
+def start(IP, PORT):
+    Camera.DETECTOR_SERVER_IP = IP
+    Camera.DETECTOR_SERVER_PORT = PORT
+
     import os
     os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
     app = QApplication(sys.argv)
     window = Main()
     app.exec_()

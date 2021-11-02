@@ -5,7 +5,7 @@ import DetectorConnector
 from PyQt5.QtCore import QThread, pyqtSignal
 from ImageUtils import draw_area
 
-IMAGE_PATH = "Images\\"
+IMAGE_PATH = "Images/"
 DETECTOR_SERVER_IP = 'localhost'
 DETECTOR_SERVER_PORT = 7777
 

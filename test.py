@@ -9,7 +9,7 @@ class Test_ImageUtils(unittest.TestCase):
 
     def test_resizeCVIMG(self):
         # Preparing images for Unit Test
-        test_img = cv2.imread('images\\camera_no_signal.png')
+        test_img = cv2.imread('images/camera_no_signal.png')
 
         # Test Method
         test_img = ImageUtils.resizeCVIMG(test_img)
@@ -86,10 +86,10 @@ class Test_Detector(unittest.TestCase):
 
     def test_Detector(self):
         # Preparing images for Unit Test
-        testImg = cv2.imread('images\\Test\\test_detector.png')
+        testImg = cv2.imread('images/Test/test_detector.png')
 
         # Test Method
-        _, pos_result = ImageDetector.Detector(testImg)
+        pos_result = ImageDetector.Detector(testImg)
         result = len(pos_result)
 
         # Evaluation : Detector must find 2 people
@@ -99,10 +99,10 @@ class Test_Detector(unittest.TestCase):
 
     def test_CustomDetector(self):
         # Preparing images for Unit Test
-        testImg = cv2.imread('images\\Test\\test_custom_detector.jpg')
+        testImg = cv2.imread('images/Test/test_custom_detector.jpg')
 
         # Test Method
-        _, pos_result = ImageDetector.CustomDetector(testImg)
+        pos_result = ImageDetector.CustomDetector(testImg)
         result = len(pos_result[0])
         print(pos_result[0])
 

@@ -22,6 +22,10 @@ conda create -n cross python=3.8
 conda activate cross
 ```
 
+![1](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/1.png)
+![2](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/2.PNG)
+![3](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/3.PNG)
+
 그다음, 이 프로젝트를 다운받고 해당 폴더안에서 CONDA 명령창을 열은 후
 **필요 항목들을 설치**하기 위해서, 아래의 명령어를 실행해야 합니다.
 ```
@@ -31,12 +35,18 @@ cd THE-CROSS
 pip install -r requirements.txt
 ```
 
+![4](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/4.PNG)
+![5](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/5.PNG)
+
+
 마지막으로, **전이 학습된 Object Detection Model을 설치**하기 위해 아래의 명령어를 실행해야 합니다.   
 ( **이 모델은 EfficientDet-D2 model 모델을 전이학습한 모델입니다** )
 
 ```
 python download_model.py
 ```
+
+![6](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/6.PNG)
 
 사용 방법
 -----------------------
@@ -45,11 +55,14 @@ python download_model.py
     Image Detection Server 실행하기 위해서, 아래의 명령어를 실행해야 합니다.    
     :: 주의 :: **Socket이 열렸다는 메세지가 출력될 때까지 기다려야 합니다**
     ```
-    python DetectorServer.py --ip=XXX.XXX.XXX.XXX --port=XXXX
+    python Server.py --ip=XXX.XXX.XXX.XXX --port=XXXX
     
     :: 예시 ::
-    python DetectorServer.py --ip=127.0.0.1 --port=7777
+    python Server.py --ip=127.0.0.1 --port=7777
     ```   
+    
+    ![7](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/7.PNG)
+    
  2. ### Client Program 실행   
     **프로젝트 파일 내에서 새로운 Conda 명령창 ( 설치 과정에서 생성한 `<env-name>` 환경에서) 을 열어야 합니다.**
     ```
@@ -59,11 +72,14 @@ python download_model.py
     **CLIENT PROGRAM 을 실행하기 위해** 아래의 명령어를 실행해야 합니다.   
     :: 주의 :: **Client의 IP & PORT는 Server의 IP & PORT와 동일해야 합니다**
     ```
-    python client.py --ip=XXX.XXX.XXX.XXX --port=XXXX
+    python Client.py --ip=XXX.XXX.XXX.XXX --port=XXXX
     
     :: 예제 ::
-    python client.py --ip=127.0.0.1 --port=7777
+    python Client.py --ip=127.0.0.1 --port=7777
     ```
+    
+    ![8](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/8.PNG)
+    ![9](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/9.PNG)
    
 3. ### 횡단보토 영역 & 차도 영역 설정
    1. 프로그램의 우측 하단에서, 설정하기를 원하는 영역을 찾아 설정 버튼을 누릅니다.
