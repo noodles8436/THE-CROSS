@@ -6,8 +6,6 @@ import json
 
 import ImageDetector
 
-import argparse
-
 def receiveAll(sock, count):
     buf = b''
     while count:
