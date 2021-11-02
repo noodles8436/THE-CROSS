@@ -22,6 +22,10 @@ conda create -n cross python=3.8
 conda activate cross
 ```
 
+![1](https://user-images.githubusercontent.com/88359959/139807240-e32dab7e-802f-4a37-88c7-23a03cee078c.png)
+![2](https://user-images.githubusercontent.com/88359959/139807254-42b440a4-14c8-4073-ba7f-006c43645943.PNG)
+![3](https://user-images.githubusercontent.com/88359959/139807272-5ab8d9fc-83c7-4a82-a9a9-36aca901c7a4.PNG)
+
 그다음, 이 프로젝트를 다운받고 해당 폴더안에서 CONDA 명령창을 열은 후
 **필요 항목들을 설치**하기 위해서, 아래의 명령어를 실행해야 합니다.
 ```
@@ -31,12 +35,18 @@ cd THE-CROSS
 pip install -r requirements.txt
 ```
 
+![4](https://user-images.githubusercontent.com/88359959/139807312-7b98479f-a4a3-4abb-ae8b-9ac62b99d6e9.PNG)
+![5](https://user-images.githubusercontent.com/88359959/139807326-b5d69be3-bfbe-43a2-be16-41d9580f7a33.PNG)
+
+
 마지막으로, **전이 학습된 Object Detection Model을 설치**하기 위해 아래의 명령어를 실행해야 합니다.   
 ( **이 모델은 EfficientDet-D2 model 모델을 전이학습한 모델입니다** )
 
 ```
 python download_model.py
 ```
+
+![6](https://user-images.githubusercontent.com/88359959/139807380-26ccd78c-292e-492b-9055-6124045fb46e.PNG)
 
 사용 방법
 -----------------------
@@ -50,6 +60,9 @@ python download_model.py
     :: 예시 ::
     python DetectorServer.py --ip=127.0.0.1 --port=7777
     ```   
+    
+    ![7](https://user-images.githubusercontent.com/88359959/139807476-faee940f-a7b5-4bf0-92a2-d05d4f5a300c.PNG)
+    
  2. ### Client Program 실행   
     **프로젝트 파일 내에서 새로운 Conda 명령창 ( 설치 과정에서 생성한 `<env-name>` 환경에서) 을 열어야 합니다.**
     ```
@@ -64,6 +77,8 @@ python download_model.py
     :: 예제 ::
     python client.py --ip=127.0.0.1 --port=7777
     ```
+    
+    ![8](https://user-images.githubusercontent.com/88359959/139807508-0f23a618-15eb-442e-9c96-a7287a708e8d.PNG)
    
 3. ### 횡단보토 영역 & 차도 영역 설정
    1. 프로그램의 우측 하단에서, 설정하기를 원하는 영역을 찾아 설정 버튼을 누릅니다.
