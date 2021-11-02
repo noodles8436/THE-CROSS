@@ -6,6 +6,7 @@ import json
 
 import ImageDetector
 
+import argparse
 
 def receiveAll(sock, count):
     buf = b''
@@ -77,11 +78,3 @@ class DetectorServer:
 
         self.conn.sendall(length.encode('utf-8').ljust(64))
         self.conn.send(result_encoded_json)
-
-
-def main():
-    server = DetectorServer('localhost', 7777)
-
-
-if __name__ == "__main__":
-    main()
