@@ -315,9 +315,10 @@ class Main(QWidget):
         self.show()
 
     def closeEvent(self, a0: QtGui.QCloseEvent):
-        self.thread.close()
         self.stop_Timer()
         self.stopSirenDetector()
+        self.thread.close()
+        time.sleep(3)
         self.close()
 
     # imgLeft & imgRight must be cvImage
