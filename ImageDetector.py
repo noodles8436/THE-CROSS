@@ -47,7 +47,6 @@ def Detector(image):
 
     pos_result = []
 
-    # TODO: Remove Feature that return Img and make that Static Function(img, pos, custom_pos)...
     # loop throughout the detections and place a box around it
     for score, (ymin, xmin, ymax, xmax), label in zip(pred_scores, pred_boxes, pred_labels):
         if score < DETECTION_PRECISION or label not in DETECTION_CLASS:
@@ -82,7 +81,6 @@ def CustomDetector(image):
         pos_result.append([])
 
     # loop throughout the detections and place a box around it
-    # TODO: Remove Feature that return Img and make that Static Function(img, pos, custom_pos)...
     for score, (ymin, xmin, ymax, xmax), label in zip(pred_scores, pred_boxes, pred_labels):
         if score < CUSTOM_DETECTOR_PRECISION:
             continue
