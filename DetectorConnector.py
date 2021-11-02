@@ -85,4 +85,7 @@ class Connector:
 
     def disconnect(self):
         self.isRun = False
+        print('Closing Socket..')
         self.sock.close()
+        time.sleep(1)
+        print('Closed Socket')
