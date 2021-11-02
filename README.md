@@ -23,9 +23,9 @@ conda create -n cross python=3.8
 conda activate cross
 ```
 
-![1](https://user-images.githubusercontent.com/88359959/139807240-e32dab7e-802f-4a37-88c7-23a03cee078c.png)
-![2](https://user-images.githubusercontent.com/88359959/139807254-42b440a4-14c8-4073-ba7f-006c43645943.PNG)
-![3](https://user-images.githubusercontent.com/88359959/139807272-5ab8d9fc-83c7-4a82-a9a9-36aca901c7a4.PNG)
+![1](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/1.png)
+![2](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/2.PNG)
+![3](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/3.PNG)
 
 
 Then, Download Project from github, Open Conda prompt ***in Project Folder*** and   
@@ -37,8 +37,8 @@ cd THE-CROSS
 pip install -r requirements.txt
 ```
 
-![4](https://user-images.githubusercontent.com/88359959/139807312-7b98479f-a4a3-4abb-ae8b-9ac62b99d6e9.PNG)
-![5](https://user-images.githubusercontent.com/88359959/139807326-b5d69be3-bfbe-43a2-be16-41d9580f7a33.PNG)
+![4](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/4.PNG)
+![5](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/5.PNG)
 
 
 Finally, Follow commands below to Download Transfer trained Object Detection Model   
@@ -48,7 +48,7 @@ Finally, Follow commands below to Download Transfer trained Object Detection Mod
 python download_model.py
 ```
 
-![6](https://user-images.githubusercontent.com/88359959/139807380-26ccd78c-292e-492b-9055-6124045fb46e.PNG)
+![6](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/6.PNG)
 
 
 Usage
@@ -64,7 +64,7 @@ Usage
     python Server.py --ip=127.0.0.1 --port=7777
     ```
     
-    ![7](https://user-images.githubusercontent.com/88359959/139807476-faee940f-a7b5-4bf0-92a2-d05d4f5a300c.PNG)
+    ![7](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/7.PNG)
     
  2. ### Open Client Program
     Open ***new Conda Prompt in Project Folder ( activated `<env-name>` )***
@@ -81,7 +81,8 @@ Usage
     python Client.py --ip=127.0.0.1 --port=7777
     ```
     
-    ![8](https://user-images.githubusercontent.com/88359959/139807508-0f23a618-15eb-442e-9c96-a7287a708e8d.PNG)
+    ![8](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/8.PNG)
+    ![9](https://github.com/noodles8436/THE-CROSS/blob/development-common/README_PHOTO/9.PNG)
 
    
 3. ### Setting Crosswalk & Car Lane Area
