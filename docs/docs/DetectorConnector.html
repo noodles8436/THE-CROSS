@@ -79,13 +79,13 @@
 <span id="detectorconnector-module"></span><h1>DetectorConnector module<a class="headerlink" href="#module-DetectorConnector" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="DetectorConnector.Connector">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">DetectorConnector.</span></span><span class="sig-name descname"><span class="pre">Connector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DetectorConnector.Connector" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">DetectorConnector.</span></span><span class="sig-name descname"><span class="pre">Connector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DetectorConnector.html#Connector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DetectorConnector.Connector" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class for communicating with an object detection server. This class is responsible for
 connecting to the server, transmitting images to the server, and receiving and processing results from the server</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="DetectorConnector.Connector.connectServer">
-<span class="sig-name descname"><span class="pre">connectServer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DetectorConnector.Connector.connectServer" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">connectServer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DetectorConnector.html#Connector.connectServer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DetectorConnector.Connector.connectServer" title="Permalink to this definition"></a></dt>
 <dd><p>This function attempts to connect to the server.Create a socket to connect to the server,
 and try to connect to the server using the socket that you created. If the connection fails,
 try to reconnect a total of 10 times. If the connection fails 10 times in total, exit the program.</p>
@@ -93,13 +93,13 @@ try to reconnect a total of 10 times. If the connection fails 10 times in total,
 
 <dl class="py method">
 <dt class="sig sig-object py" id="DetectorConnector.Connector.disconnect">
-<span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DetectorConnector.Connector.disconnect" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DetectorConnector.html#Connector.disconnect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DetectorConnector.Connector.disconnect" title="Permalink to this definition"></a></dt>
 <dd><p>This function is to terminate the connection with the server.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="DetectorConnector.Connector.processing">
-<span class="sig-name descname"><span class="pre">processing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DetectorConnector.Connector.processing" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">processing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DetectorConnector.html#Connector.processing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DetectorConnector.Connector.processing" title="Permalink to this definition"></a></dt>
 <dd><p>This function uses a socket to transmit the image and the size of the image to the server,
 receives the result data and the size of the result data from the server,
 and returns the object detection result.</p>
@@ -147,7 +147,7 @@ and returns the object detection result.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="DetectorConnector.receiveAll">
-<span class="sig-prename descclassname"><span class="pre">DetectorConnector.</span></span><span class="sig-name descname"><span class="pre">receiveAll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sock</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DetectorConnector.receiveAll" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">DetectorConnector.</span></span><span class="sig-name descname"><span class="pre">receiveAll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sock</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DetectorConnector.html#receiveAll"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DetectorConnector.receiveAll" title="Permalink to this definition"></a></dt>
 <dd><p>This function receives and returns all buffers transmitted from the server so far through the socket.</p>
 <p>The buffer is read through the socket, but the read size is limited.
 The size limit is limited by the value stored in the count variable.</p>
