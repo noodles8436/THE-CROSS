@@ -1,4 +1,5 @@
-# THE-CROSS - Smart Traffic Control Application
+
+# THE-CROSS - Smart Traffic Control Application [![Build Status](https://app.travis-ci.com/noodles8436/THE-CROSS.svg?branch=main)](https://app.travis-ci.com/noodles8436/THE-CROSS)
 
 - This project is for submitting the OSS Developer Competition.
 - [README 한국어 버전은 이 곳을 클릭하세요.](https://github.com/noodles8436/THE-CROSS/blob/main/README_KR.md)
