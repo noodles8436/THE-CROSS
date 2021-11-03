@@ -1,7 +1,0 @@
-FileManager module
-==================
-
-.. automodule:: FileManager
-   :members:
-   :undoc-members:
-   :show-inheritance:

@@ -1,7 +1,0 @@
-download\_model module
-======================
-
-.. automodule:: download_model
-   :members:
-   :undoc-members:
-   :show-inheritance:

@@ -1,7 +1,0 @@
-DetectorServer module
-=====================
-
-.. automodule:: DetectorServer
-   :members:
-   :undoc-members:
-   :show-inheritance:

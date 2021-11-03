@@ -1,7 +1,0 @@
-SirenDetector module
-====================
-
-.. automodule:: SirenDetector
-   :members:
-   :undoc-members:
-   :show-inheritance:
