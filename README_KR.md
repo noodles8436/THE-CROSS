@@ -69,7 +69,7 @@ python download_model.py
     conda activate <env-name>
     cd THE-CROSS
     ```
-    **CLIENT PROGRAM 을 실행하기 위해** 아래의 명령어를 실행해야 합니다.   
+    **Client Program 을 실행하기 위해** 아래의 명령어를 실행해야 합니다.   
     :: 주의 :: **Client의 IP & PORT는 Server의 IP & PORT와 동일해야 합니다**
     ```
     python Client.py --ip=XXX.XXX.XXX.XXX --port=XXXX
@@ -81,7 +81,7 @@ python download_model.py
     ![8](https://github.com/noodles8436/THE-CROSS/blob/main/README_PHOTO/8.PNG)
     ![9](https://github.com/noodles8436/THE-CROSS/blob/main/README_PHOTO/9.PNG)
    
-3. ### 횡단보토 영역 & 차도 영역 설정
+3. ### 횡단보도 영역 & 차도 영역 설정
    1. 프로그램의 우측 하단에서, 설정하기를 원하는 영역을 찾아 설정 버튼을 누릅니다.
    2. 버튼을 누르고 난 후에 보이는 팝업 창에서, 장치와 연결된 실시간 카메라의 영상이 보일 때까지 기다립니다.
    3. 팝업 창에서 실시간 카메라 영상이 보일 경우, 팝업창의 **화면에 4 개의 점을 마우스 클릭을 통해 사각형 영역을 설정**해야 합니다.
@@ -119,8 +119,8 @@ gdown = MIT
 
 도움을 주신 분들
 ----------------------
-***모움을 주신 모든 분들께 진심으로 감사드립니다.***
-- 휠체어 대여 : 연세대학교 미래캠퍼스, SW중심사업단 
+***도움을 주신 모든 분들께 진심으로 감사드립니다.***
+- 휠체어 대여 : 연세대학교 미래캠퍼스, SW중심대학사업단 
 - 평가 및 조언 : 연세대학교 미래캠퍼스 손정우 교수님
 - 실험에 사용되는 영상 촬영 도움 : 이승우, 이재규, 신동휘
 - 조언 : 송영우
