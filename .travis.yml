@@ -1,0 +1,11 @@
+# .travis.yml
+language: python
+python:
+    - "3.8"
+
+install:
+    - pip install -r requirements.txt
+    
+script:
+    - python -m download_model.py
+    - python -m test.py
