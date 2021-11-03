@@ -5,7 +5,7 @@ python:
 
 install:
     - pip install -r requirements.txt
+    - python download_model.py
     
 script:
-    - python -m download_model.py
-    - python -m test.py
+    - python test.py
