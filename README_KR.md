@@ -109,9 +109,11 @@ tensorflow = Apache 2.0
 tensorflow-hub = Apache 2.0   
 OpenCV = Apache 2.0   
 PyQT5 = GPL v3   
+Sphinx = BSD
 Numpy = BSD 3-Clause   
 sounddevice = MIT   
 gdown = MIT   
+sphinx_rtd_theme = MIT   
 ```
 
 개발방법론
