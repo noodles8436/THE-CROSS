@@ -78,7 +78,15 @@ ClassLabel_List = [WHEELCHAIR_LABEL, BABY_CARRIAGE_LABEL, CANE__LABEL, AMBULANCE
 
 
 class Main(QWidget):
+    """This class is actually a central class for using client programs.
+    All functions work around this class.
+    """
+
     def __init__(self):
+        """A function to initialize the Main class
+        This function declares all variables and classes required to run a client program.
+        """
+
         super().__init__()
 
         self.Emergency_Ambulance = False
@@ -152,6 +160,8 @@ class Main(QWidget):
         self.initUI()
 
     def initUI(self):
+        """This function is for GUI activation. It is also a function that actually starts the program.
+        """
         UpPanel = QHBoxLayout()
         DownPanel = QHBoxLayout()
 
@@ -315,6 +325,9 @@ class Main(QWidget):
         self.show()
 
     def closeEvent(self, a0: QtGui.QCloseEvent):
+        """This function is an event function that occurs when the exit button is clicked in the GUI,
+        allowing the client program to end safely.
+        """
         self.stop_Timer()
         self.stopSirenDetector()
         self.thread.close()
@@ -323,6 +336,25 @@ class Main(QWidget):
 
     # imgLeft & imgRight must be cvImage
     def processing(self, imgLeft, imgRight, left_pos, right_pos, custom_left_pos, custom_right_pos):
+        """This function is a function that receives an image from a camera, receives an object detection result,
+        and determines whether to adjust the signal or not.
+
+        :param 3D-ndarray imgLeft: 3D ndarray type variable, which has left image data.
+        :param 3D-ndarray imgRight: 3D ndarray type variable, which has right image data.
+
+        :param 2D-list left_pos: A list of coordinates of the detected person in left image.
+        .. Note:: left_pos must have the form of [[xmin, ymax, xmax, ymin], [..], ..]
+
+        :param 2D-list right_pos: A list of coordinates of the detected person in right image.
+        .. Note:: right_pos must have the form of [[xmin, ymax, xmax, ymin], [..], ..]
+
+        :param 3D-list custom_left_pos: A list of coordinates of the detected objects in left image.
+        .. Note:: custom_left_pos must have the form of [ [ [xmin, ymax, xmax, ymin], [..], .. ], [..], .. ]
+
+        :param 3D-list custom_right_pos: A list of coordinates of the detected objects in right image.
+        .. Note:: custom_right_pos must have the form of [ [ [xmin, ymax, xmax, ymin], [..], .. ], [..], .. ]
+        """
+
         if self.isPreparingCamera is True:
             return
 
@@ -431,48 +463,78 @@ class Main(QWidget):
     # ============== CONTROL PANEL SIGH CONTROL ================
 
     def crosswalk_TurnRed_On(self):
+        """This function turns on the pedestrian red signal in the GUI.
+        """
         self.Crosswalk_Red.setPixmap(self.CROSSWALK_RED_ON_IMG.pixmap())
 
     def crosswalk_TurnRed_Off(self):
+        """This function turns off the pedestrian red signal in the GUI.
+        """
         self.Crosswalk_Red.setPixmap(self.CROSSWALK_RED_OFF_IMG.pixmap())
 
     def crosswalk_TurnGreen_On(self):
+        """This function turns on the pedestrian green signal in the GUI.
+        """
         self.Crosswalk_Green.setPixmap(self.CROSSWALK_GREEN_ON_IMG.pixmap())
 
     def crosswalk_TurnGreen_Off(self):
+        """This function turns off the pedestrian green signal in the GUI.
+        """
         self.Crosswalk_Green.setPixmap(self.CROSSWALK_GREEN_OFF_IMG.pixmap())
 
     def carlane_TurnRed_On(self):
+        """This function turns on the GUI's vehicle red signal.
+        """
         self.CarLane_Red.setPixmap(self.RED_ON_IMG.pixmap())
 
     def carlane_TurnRed_Off(self):
+        """This function turns off the GUI's vehicle red signal.
+        """
         self.CarLane_Red.setPixmap(self.RED_OFF_IMG.pixmap())
 
     def carlane_TurnGreen_On(self):
+        """This function turns on the GUI's vehicle green signal.
+        """
         self.CarLane_Green.setPixmap(self.GREEN_ON_IMG.pixmap())
 
     def carlane_TurnGreen_Off(self):
+        """This function turns off the GUI's vehicle green signal.
+        """
         self.CarLane_Green.setPixmap(self.GREEN_OFF_IMG.pixmap())
 
     def carlane_TurnYellow_On(self):
+        """This function turns on the GUI's vehicle yellow signal.
+        """
         self.CarLane_Yellow.setPixmap(self.YELLOW_ON_IMG.pixmap())
 
     def carlane_TurnYellow_Off(self):
+        """This function turns of the GUI's vehicle yellow signal.
+        """
         self.CarLane_Yellow.setPixmap(self.YELLOW_OFF_IMG.pixmap())
 
     # ================ CONTROL PANEL CAMERA Setting ==================
 
     def preparingCamera(self):
+        """This function stops the output of two real-time images displayed on the GUI,
+        allowing the user to adjust the camera.
+        """
         self.isPreparingCamera = True
         self.CameraLeft.setPixmap(self.CAMERA_PREPARING_IMG_L.pixmap())
         self.CameraRight.setPixmap(self.CAMERA_PREPARING_IMG_R.pixmap())
 
     def stopCamera(self):
+        """This function stops VideoThread instance from delivering real-time images to MainClass,
+        stops real-time images output on the GUI,
+        and actually stops the camera.
+        """
         if self.thread.isRun() is True:
             self.thread.stop()
             self.preparingCamera()
 
     def refreshCamera(self):
+        """This function is a function that brings back the camera's set value,
+        resets the camera, and allows the camera to work again.
+        """
         self.stopCamera()
         self.preparingCamera()
         self.thread.setCameraNumber(self.config.getConfig()['LEFT_CAMERA_NUMBER'],
@@ -483,6 +545,15 @@ class Main(QWidget):
     # ================= CONTROL PANEL BUTTON EVENTS =====================
 
     def confirmButtonClicked(self):
+        """This function is a function called to store the program settings that the user has changed on the GUI.
+        This function allows the user's changed program setting value to be stored in the config.json file on the GUI,
+        so that the user's changed program setting value on the GUI
+        can be applied directly to the currently operating program.
+
+        .. Note:: It may take up to one cycle of traffic light before the program setting value changed by the user is applied on the GUI. This varies depending on the current traffic light signal status.
+
+        """
+
         # GET TEXTBOX VALUES
         try:
             INCREASE_TIME_NORMAL = int(self.Option_INC_TIME_NORMAL_Input.text())
@@ -507,15 +578,23 @@ class Main(QWidget):
         self.timeIncSpecial = self.config.getConfig()['INCREASE_TIME_SPECIAL']
 
     def Change_CrosswalkTime_Button_Event(self):
+        """It is a function that is called when the user clicks the Change to pedestrian signal button on the GUI.
+        """
         if self.isCarlaneTime is True and self.isCrosswalkTime is False:
             self.timeStack = self.changeTerm
         elif self.isCarlaneTime is False and self.isCrosswalkTime is True:
             self.timeStack = self.crosswalkTime
 
     def Change_CarTime_Button_Event(self):
+        """This is a function that is called when the user clicks
+        the Change to Vehicle Driving Signal button on the GUI.
+        """
         self.startCarlane()
 
     def Left_Camera_Crosswalk_Button_Event(self):
+        """This is an event function that is called when the user clicks
+        the reset left camera crosswalk area button on the GUI.
+        """
         self.stopCamera()
         self.stop_Timer()
         setup = CameraSetup(self.config.getConfig()['LEFT_CAMERA_NUMBER'])
@@ -525,6 +604,9 @@ class Main(QWidget):
         self.start_Timer()
 
     def Right_Camera_Crosswalk_Button_Event(self):
+        """This is an event function that is called when the user clicks
+        the reset right camera crosswalk area button on the GUI.
+        """
         self.stopCamera()
         self.stop_Timer()
         setup = CameraSetup(self.config.getConfig()['RIGHT_CAMERA_NUMBER'])
@@ -534,6 +616,9 @@ class Main(QWidget):
         self.start_Timer()
 
     def Left_Camera_Carlane_Button_Event(self):
+        """This is an event function that is called when the user clicks
+        the reset left camera vehicle zone button on the GUI.
+        """
         self.stopCamera()
         self.stop_Timer()
         setup = CameraSetup(self.config.getConfig()['LEFT_CAMERA_NUMBER'])
@@ -543,6 +628,9 @@ class Main(QWidget):
         self.start_Timer()
 
     def Right_Camera_Carlane_Button_Event(self):
+        """This is an event function that is called when the user clicks
+        the reset right camera vehicle zone button on the GUI.
+        """
         self.stopCamera()
         self.stop_Timer()
         setup = CameraSetup(self.config.getConfig()['RIGHT_CAMERA_NUMBER'])
@@ -554,12 +642,14 @@ class Main(QWidget):
     # ============================= TIMER ===============================
 
     def TimerMethod(self):
+        """This function manages the actual traffic light time and outputs signals according to emergencies.
+        """
         while self.isTimerRun:
-            # 초기화 부분
+            # Initialize
             if self.isCarlaneTime is False and self.isCrosswalkTime is False:
                 self.startCarlane()
 
-            # 긴급 상황 처리
+            # Emergency handling part.
             if self.Emergency_Ambulance or self.Emergency_Person or self.Emergency_DisablePerson:
 
                 self.timeStack -= 1
@@ -595,30 +685,31 @@ class Main(QWidget):
 
                 continue
 
-            # 타이머가 0초일 경우
+            # if timer == 0
             if self.timeStack <= 0:
                 self.carlane_TurnYellow_Off()
-                # 차량신호 시간이 끝났을 경우
+                # When the driving signal is over,
                 if self.isCarlaneTime is True and self.isCrosswalkTime is False:
                     self.startCrosswalk()
 
-                # 횡단보도 시간이 끝났을 경우
+                # When the pedestrian signal time is over
                 elif self.isCarlaneTime is False and self.isCrosswalkTime is True:
                     self.startCarlane()
 
-            # changeTerm 내의 시간이라면 노란불 켜기
+            # If the signal time is equal to or less than the yellow signal time,
+            # the current signal is output as the yellow signal.
             if 0 < self.timeStack <= self.changeTerm and \
                     self.isCrosswalkTime is False and self.isCarlaneTime is True:
                 self.carlane_TurnRed_Off()
                 self.carlane_TurnYellow_On()
                 self.carlane_TurnGreen_Off()
 
-            # 타이머 감소 및 시간 표시 변경
+            # Timer reduction and time output to GUI.
             self.timeStack -= 1
             self.changeTimer(self.timeStack)
             time.sleep(1)
 
-        # 타이머 종료 처리
+        # Close Traffic Signal Timer
         self.isCrosswalkTime = False
         self.isCarlaneTime = False
 
@@ -630,6 +721,8 @@ class Main(QWidget):
         self.crosswalk_TurnGreen_Off()
 
     def startCrosswalk(self):
+        """This function actually changes the signal to the vehicle driving time and reflects it in the GUI.
+        """
         self.carlane_TurnRed_On()
         self.carlane_TurnGreen_Off()
 
@@ -641,6 +734,8 @@ class Main(QWidget):
         self.isCrosswalkTime = True
 
     def startCarlane(self):
+        """This function actually changes the signal to pedestrian time and reflects it in the GUI.
+        """
         self.carlane_TurnRed_Off()
         self.carlane_TurnGreen_On()
 
@@ -652,10 +747,14 @@ class Main(QWidget):
         self.isCrosswalkTime = False
 
     def stop_Timer(self):
+        """This function is a function that stops the traffic light timer process.
+        """
         self.isTimerRun = False
         self.TimerLabel.setText('X')
 
     def start_Timer(self):
+        """This function is a function that starts the traffic light timer process.
+        """
         if self.timerThread.is_alive() is True:
             return
         self.timerThread = threading.Thread(target=self.TimerMethod)
@@ -663,19 +762,29 @@ class Main(QWidget):
         self.timerThread.start()
 
     def changeTimer(self, num):
+        """This function is a function that changes the traffic light time displayed on the GUI.
+        """
         self.TimerLabel.setText(str(num + 1))
 
     # ====================  SIREN DETECTOR  ======================
     def startSirenDetector(self):
+        """This function is a function that activates the SirenDetector
+        to detect the siren sound of an emergency vehicle.
+        """
         self.stopSirenDetector()
         self.SirenDetector.start()
 
     def stopSirenDetector(self):
+        """This function is a function that stops the SirenDetector to detect the siren sound of an emergency vehicle.
+        """
         if self.SirenDetector.isRun is True:
             self.SirenDetector.stop()
 
 
 def start(IP, PORT):
+    """This function is called from Client.py to run a client program.
+    """
+
     Camera.DETECTOR_SERVER_IP = IP
     Camera.DETECTOR_SERVER_PORT = PORT
 
