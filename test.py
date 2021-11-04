@@ -9,7 +9,7 @@ class Test_ImageUtils(unittest.TestCase):
 
     def test_resizeCVIMG(self):
         # Preparing images for Unit Test
-        test_img = cv2.imread('../images/camera_no_signal.png')
+        test_img = cv2.imread('Images/camera_no_signal.png')
 
         # Test Method
         test_img = ImageUtils.resizeCVIMG(test_img)
@@ -86,7 +86,7 @@ class Test_Detector(unittest.TestCase):
 
     def test_Detector(self):
         # Preparing images for Unit Test
-        testImg = cv2.imread('../images/Test/test_detector.png')
+        testImg = cv2.imread('Images/Test/test_detector.png')
 
         # Test Method
         pos_result = ImageDetector.Detector(testImg)
@@ -99,7 +99,7 @@ class Test_Detector(unittest.TestCase):
 
     def test_CustomDetector(self):
         # Preparing images for Unit Test
-        testImg = cv2.imread('../images/Test/test_custom_detector.jpg')
+        testImg = cv2.imread('Images/Test/test_custom_detector.jpg')
 
         # Test Method
         pos_result = ImageDetector.CustomDetector(testImg)
