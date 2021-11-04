@@ -7,10 +7,11 @@
 Installation
 -----------------------
 
-Before installing, Please check the two points below.   
-1. Install ***Anaconda on the device you want to run*** the program on. ( Recommand using WINDOWS OS )
-2. Make sure that ***AT LEAST ONE camera and UP TO TWO CAMERAS are connected*** to the device.
-( WebCam and USB CAM are both available, but recommend using USB CAM. )   
+Please check the following steps before installation.
+
+1. Install ***Anaconda on your device or computer ***. ( WINDOWS OS is recommended.)
+2. Make sure that ***AT LEAST ONE camera is connected ***. In addition, ***UP TO TWO CAMERAS can be connected*** to the device.
+( WebCam and USB CAM are both available, but recommends using USB CAM. )   
 
    
 Open command prompt and create conda environment
@@ -29,8 +30,8 @@ conda activate cross
 ![3](https://github.com/noodles8436/THE-CROSS/blob/main/README_PHOTO/3.PNG)
 
 
-Then, Download Project from github, Open Conda prompt ***in Project Folder*** and   
-Follow commands below ***TO DOWNLOAD REQUIREMENTS***
+Then, Download the Project from github, open Conda prompt ***in Project Folder*** and   
+Follow the commands below ***TO DOWNLOAD REQUIREMENTS***
 ```
 git clone https://github.com/noodles8436/THE-CROSS.git
 cd THE-CROSS
@@ -42,8 +43,8 @@ pip install -r requirements.txt
 ![5](https://github.com/noodles8436/THE-CROSS/blob/main/README_PHOTO/5.PNG)
 
 
-Finally, Follow commands below to Download Transfer trained Object Detection Model   
-( ***This model is a model obtained by transfer training the EfficientDet-D2 model.*** )
+Finally, follow the commands below to download Transfer trained Object Detection Model   
+( ***This model is obtained by transfer training the EfficientDet-D2 model.*** )
 
 ```
 python download_model.py
@@ -56,7 +57,7 @@ Usage
 -----------------------
 
  1. ### Open Image Detection Server   
-    Follow the below command to open Image Detection Server   
+    Enter the following command to open Image Detection Server   
     :: CAUTION :: ***wait until "Socket Opened" Message printed***
     ```
     python Server.py --ip=XXX.XXX.XXX.XXX --port=XXXX
@@ -67,7 +68,7 @@ Usage
     
     ![7](https://github.com/noodles8436/THE-CROSS/blob/main/README_PHOTO/7.PNG)
     
- 2. ### Open Client Program
+ 2. ### Open the client
     Open ***new Conda Prompt in Project Folder ( activated `<env-name>` )***
     ```
     conda activate <env-name>
@@ -87,11 +88,11 @@ Usage
 
    
 3. ### Setting Crosswalk & Car Lane Area
-   1. At the bottom right of the program screen, find the area you want and click the area setting button.
-   2. When clicking the button, wait for the real-time camera image to be displayed in the window window that pops up.
-   3. When the real-time camerua image is displayed in the pop-up window window, click four spots on the screen to set a square-shaped area.
-   4. If you click more than four spots, the four spots you clicked before will be removed, and you can reset the square-shaped area by clicking the spots again.
-   5. To save, press the keyboard "Q" key to save it.
+   1. At the bottom right of the program screen, find the area you want and click on the area setting button.
+   2. When clicking on the button, wait for the real-time camera image to be displayed in the windo that pops up.
+   3. When the real-time camera image is displayed in the pop-up window, click on the four spots on the screen to set a square-shaped area.
+   4. If you click more than four spots, the four spots you clicked before will be removed, and you can reset the square-shaped area by clicking on the spots again.
+   5. To save, press the keyboard "Q" key.
 
 4. ### Setting the value of time increase or decrease.
    1. Change the several values that exist in the lower left to the desired values. 
@@ -126,7 +127,7 @@ How to Conribute
 
 Contributors
 ----------------------
-***Thank you to everyone who helped with this project.***
+***Thanks everyone who helped me with this project.***
 - Wheelchair rental : Yonsei University Mirae Campus, SW-centered University Project Group.   
 - Evaluation and advice : Professor Son Jeongwoo of Yonsei University's Mirae Campus.   
 - Help to film videos for experiments. : Lee SeungWoo, Lee JaeGyu, Sin Donghwi   
