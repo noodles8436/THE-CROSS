@@ -9,7 +9,7 @@ Installation
 
 Please check the following steps before installation.
 
-1. Install ***Anaconda on your device or computer ***. ( WINDOWS OS is recommended.)
+1. Install ***Anaconda on your device or computer***. ( WINDOWS OS is recommended.)
 2. Make sure that ***AT LEAST ONE camera is connected ***. In addition, ***UP TO TWO CAMERAS can be connected*** to the device.
 ( WebCam and USB CAM are both available, but recommends using USB CAM. )   
 
