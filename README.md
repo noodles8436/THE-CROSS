@@ -1,6 +1,6 @@
 
-# THE-CROSS - Smart Traffic Control Application [![Build Status](https://app.travis-ci.com/noodles8436/THE-CROSS.svg?branch=main)](https://app.travis-ci.com/noodles8436/THE-CROSS) [![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-3812/)
-
+[![Build Status](https://app.travis-ci.com/noodles8436/THE-CROSS.svg?branch=main)](https://app.travis-ci.com/noodles8436/THE-CROSS) [![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-3812/) [![codecov](https://codecov.io/gh/noodles8436/THE-CROSS/branch/main/graph/badge.svg?token=785SLIJ1OO)](https://codecov.io/gh/noodles8436/THE-CROSS)
+# THE-CROSS - Smart Traffic Control Application   
 - This project is for submitting the OSS Developer Competition.
 - [README 한국어 버전은 이 곳을 클릭하세요.](https://github.com/noodles8436/THE-CROSS/blob/main/README_KR.md)
 

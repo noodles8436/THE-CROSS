@@ -1,4 +1,5 @@
-# THE-CROSS - 스마트 신호등 제어 시스템 [![Build Status](https://app.travis-ci.com/noodles8436/THE-CROSS.svg?branch=main)](https://app.travis-ci.com/noodles8436/THE-CROSS) [![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-3812/)
+[![Build Status](https://app.travis-ci.com/noodles8436/THE-CROSS.svg?branch=main)](https://app.travis-ci.com/noodles8436/THE-CROSS) [![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-3812/) [![codecov](https://codecov.io/gh/noodles8436/THE-CROSS/branch/main/graph/badge.svg?token=785SLIJ1OO)](https://codecov.io/gh/noodles8436/THE-CROSS)
+# THE-CROSS - 스마트 신호등 제어 시스템 
 
 - 본 프로젝트는 과학기술정보통신부에서 주최한 OSS 개발자 대회 제출용입니다.
 
