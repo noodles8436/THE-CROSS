@@ -107,6 +107,8 @@ Development & Test environment
 
 FAQ
 ----------------------
+  - Q: HOW TO FIX SavedModel file does not exist at: [File Location]   
+    A: Check [this page.](https://github.com/noodles8436/THE-CROSS/issues/41)
 
 Library License
 ----------------------
