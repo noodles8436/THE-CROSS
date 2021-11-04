@@ -102,6 +102,8 @@ python download_model.py
 
 FAQ
 ----------------------
+  - Q: 텐서플로우 허브 사용시 SavedModel file does not exist at: [File Location] 라는 오류가 발생합니다.   
+    A: [이 페이지](https://github.com/noodles8436/THE-CROSS/issues/41)를 참고하셔서 해결하시기 바랍니다.
 
 Library License
 ----------------------
