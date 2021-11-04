@@ -119,6 +119,7 @@ sphinx_rtd_theme = MIT
 
 개발방법론
 ----------------------
+### 깃허브 위키페이지에서 ['HOW TO CONTUTE'](https://github.com/noodles8436/THE-CROSS/wiki/How-To-Contribute) 항목을  확인하세요.
 
 도움을 주신 분들
 ----------------------
