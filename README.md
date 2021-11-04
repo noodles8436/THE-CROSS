@@ -124,6 +124,7 @@ sphinx_rtd_theme = MIT
 
 How to Conribute
 ----------------------
+### Check out the ['HOW TO CONTRIBUTE'](https://github.com/noodles8436/THE-CROSS/wiki/How-To-Contribute) item on the Github Wiki Page.   
 
 Contributors
 ----------------------
