@@ -13,4 +13,4 @@ install:
     - python download_model.py
     
 script:
-    - coverage run --omit="*/test*" -m unittest discover ./tests/ *test.py
+    - coverage run --omit="*/test*" -m unittest test.py
