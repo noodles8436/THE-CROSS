@@ -14,3 +14,6 @@ install:
     
 script:
     - coverage run --omit="*/test*" -m unittest test.py
+
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
